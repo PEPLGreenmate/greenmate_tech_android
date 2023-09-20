@@ -14,3 +14,12 @@ dependencyResolutionManagement {
 }
 rootProject.name = "GreenMate"
 include ':app'
+include ':feature:home'
+include ':feature:chat'
+include ':feature:diary'
+include ':core:model'
+include ':core:data'
+include ':core:ui'
+include ':core:util'
+include ':core:datastore'
+include ':core:designsystem'
