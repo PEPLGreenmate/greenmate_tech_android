@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.pepl.chat'
+    namespace 'com.pepl.manage'
     compileSdk 33
 
     defaultConfig {
