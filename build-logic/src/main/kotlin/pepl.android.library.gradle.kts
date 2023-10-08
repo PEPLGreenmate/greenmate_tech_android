@@ -5,7 +5,7 @@ import com.pepl.greenmate.configureKotlinAndroid
 
 plugins {
     id("com.android.library")
-    id("droidknights.verify.detekt")
+    id("pepl.verify.detekt")
 }
 
 configureKotlinAndroid()

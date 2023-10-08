@@ -2,8 +2,8 @@ import com.pepl.greenmate.configureHiltAndroid
 import com.pepl.greenmate.libs
 
 plugins {
-    id("droidknights.android.library")
-    id("droidknights.android.compose")
+    id("pepl.android.library")
+    id("pepl.android.compose")
 }
 
 android {

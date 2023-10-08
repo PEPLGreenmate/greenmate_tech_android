@@ -3,7 +3,7 @@ import com.pepl.greenmate.configureKotlin
 
 plugins {
     kotlin("jvm")
-    id("droidknights.verify.detekt")
+    id("pepl.verify.detekt")
 }
 
 configureKotlin()

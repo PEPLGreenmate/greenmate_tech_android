@@ -1,11 +1,12 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
-        gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -13,21 +14,26 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "GreenMate"
 include(
     ":app",
 
-    ":core:model",
-    ":core:data",
-    ":core:ui",
-    ":core:util",
-    ":core:datastore",
     ":core:designsystem",
+    ":core:data",
+    ":core:domain",
+    ":core:navigation",
+    ":core:model",
+    ":core:ui",
+    ":core:testing",
+    ":core:datastore",
 
-    ":feature:dictionary",
-    ":feature:manage",
+    ":feature:home",
     ":feature:friend",
     ":feature:chat",
-    ":feature:diary"
+    ":feature:diary",
+    ":feature:dictionary",
+    ":feature:manage",
+
 )
-include(":feature:home")
+include(":core:domain")
