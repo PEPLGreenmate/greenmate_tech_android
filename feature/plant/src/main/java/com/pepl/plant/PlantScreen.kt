@@ -1,4 +1,4 @@
-package com.pepl.chat
+package com.pepl.plant
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,38 +10,38 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-internal fun ChatRoute(
+internal fun PlantRoute(
     padding: PaddingValues,
     onSessionClick: () -> Unit,
     onContributorClick: () -> Unit,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
-    viewModel: ChatViewModel = hiltViewModel(),
+    viewModel: PlantViewModel = hiltViewModel(),
 ) {
-    val chatUiState by viewModel.chatUiState.collectAsStateWithLifecycle()
+    val plantUiState by viewModel.plantUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.errorFlow.collectLatest { throwable -> onShowErrorSnackBar(throwable) }
     }
 
-    ChatScreen(
+    PlantScreen(
         padding = padding,
-        chatUiState = chatUiState,
+        friendUiState = plantUiState,
         onSessionClick = onSessionClick,
         onContributorClick = onContributorClick,
     )
 }
 
 @Composable
-private fun ChatScreen(
+private fun PlantScreen(
     padding: PaddingValues,
-    chatUiState: ChatUiState,
+    friendUiState: PlantUiState,
     onSessionClick: () -> Unit,
     onContributorClick: () -> Unit,
 ) {
@@ -54,7 +54,7 @@ private fun ChatScreen(
             .padding(bottom = 4.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(text = "Chat")
+        Text(text = "Plant")
 //        SessionCard(onClick = onSessionClick)
 //        ContributorCard(onClick = onContributorClick)
 //        SponsorCard(uiState = sponsorsUiState)

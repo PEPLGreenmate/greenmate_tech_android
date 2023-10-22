@@ -1,4 +1,4 @@
-package com.pepl.chat
+package com.pepl.setting
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,31 +17,31 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-internal fun ChatRoute(
+internal fun SettingRoute(
     padding: PaddingValues,
     onSessionClick: () -> Unit,
     onContributorClick: () -> Unit,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
-    viewModel: ChatViewModel = hiltViewModel(),
+    viewModel: SettingViewModel = hiltViewModel(),
 ) {
-    val chatUiState by viewModel.chatUiState.collectAsStateWithLifecycle()
+    val settingUiState by viewModel.settingUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         viewModel.errorFlow.collectLatest { throwable -> onShowErrorSnackBar(throwable) }
     }
 
-    ChatScreen(
+    SettingScreen(
         padding = padding,
-        chatUiState = chatUiState,
+        settingUiState = settingUiState,
         onSessionClick = onSessionClick,
         onContributorClick = onContributorClick,
     )
 }
 
 @Composable
-private fun ChatScreen(
+private fun SettingScreen(
     padding: PaddingValues,
-    chatUiState: ChatUiState,
+    settingUiState: SettingUiState,
     onSessionClick: () -> Unit,
     onContributorClick: () -> Unit,
 ) {
@@ -54,7 +54,7 @@ private fun ChatScreen(
             .padding(bottom = 4.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Text(text = "Chat")
+        Text(text = "Setting")
 //        SessionCard(onClick = onSessionClick)
 //        ContributorCard(onClick = onContributorClick)
 //        SponsorCard(uiState = sponsorsUiState)

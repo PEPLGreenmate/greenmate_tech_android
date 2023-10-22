@@ -26,7 +26,7 @@ android {
 
 dependencies {
     implementation(projects.core.navigation)
-    implementation(projects.feature.friend)
+    implementation(projects.feature.plant)
     implementation(projects.feature.home)
 
     implementation(projects.core.designsystem)

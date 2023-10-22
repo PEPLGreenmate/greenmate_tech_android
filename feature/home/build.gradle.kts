@@ -7,11 +7,10 @@ android {
 }
 
 dependencies {
-    implementation(projects.feature.friend)
     implementation(projects.feature.chat)
+    implementation(projects.feature.plant)
     implementation(projects.feature.diary)
-    implementation(projects.feature.dictionary)
-    implementation(projects.feature.manage)
+    implementation(projects.feature.setting)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

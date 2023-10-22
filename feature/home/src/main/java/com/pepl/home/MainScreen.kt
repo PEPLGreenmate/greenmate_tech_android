@@ -6,7 +6,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +19,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -31,17 +31,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import com.pepl.chat.navigation.chatNavGraph
-import com.pepl.designsystem.theme.Purple40
-import com.pepl.designsystem.theme.Purple80
+import com.pepl.designsystem.theme.BLACK
+import com.pepl.designsystem.theme.Gray
+import com.pepl.designsystem.theme.MainGreen
+import com.pepl.designsystem.theme.White
 import com.pepl.diary.navigation.diaryNavGraph
-import com.pepl.dictionary.navigation.dictionaryNavGraph
-import com.pepl.friend.navigation.friendNavGraph
-import com.pepl.manage.navigation.manageNavGraph
+import com.pepl.plant.navigation.plantNavGraph
+import com.pepl.setting.navigation.settingNavGraph
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
@@ -66,19 +69,19 @@ internal fun MainScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Purple80)
+                    .background(White)
             ) {
                 NavHost(
                     navController = navigator.navController,
                     startDestination = navigator.startDestination
                 ) {
-                    friendNavGraph(
+                    chatNavGraph(
                         padding = padding,
                         onSessionClick = {},
                         onContributorClick = {},
                         onShowErrorSnackBar = onShowErrorSnackBar
                     )
-                    chatNavGraph(
+                    plantNavGraph(
                         padding = padding,
                         onSessionClick = {},
                         onContributorClick = {},
@@ -90,13 +93,7 @@ internal fun MainScreen(
                         onContributorClick = {},
                         onShowErrorSnackBar = onShowErrorSnackBar
                     )
-                    dictionaryNavGraph(
-                        padding = padding,
-                        onSessionClick = {},
-                        onContributorClick = {},
-                        onShowErrorSnackBar = onShowErrorSnackBar
-                    )
-                    manageNavGraph(
+                    settingNavGraph(
                         padding = padding,
                         onSessionClick = {},
                         onContributorClick = {},
@@ -132,20 +129,9 @@ private fun MainBottomBar(
         Row(
             modifier = Modifier
                 .navigationBarsPadding()
-                .padding(start = 8.dp, end = 8.dp, bottom = 28.dp)
+                .padding(start = 8.dp, end = 8.dp)
                 .fillMaxWidth()
-                .height(56.dp)
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(size = 28.dp)
-                )
-                .background(
-                    color = MaterialTheme.colorScheme.surface,
-                    shape = RoundedCornerShape(28.dp)
-                )
-                .padding(horizontal = 28.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                .height(59.dp)
         ) {
             tabs.forEach { tab ->
                 MainBottomBarItem(
@@ -181,11 +167,12 @@ private fun RowScope.MainBottomBarItem(
             painter = painterResource(tab.iconResId),
             contentDescription = tab.contentDescription,
             tint = if (selected) {
-                Purple40
+                MainGreen
             } else {
                 MaterialTheme.colorScheme.outline
             },
-            modifier = Modifier.size(34.dp),
+            modifier = Modifier
+                .size(25.dp)
         )
     }
 }

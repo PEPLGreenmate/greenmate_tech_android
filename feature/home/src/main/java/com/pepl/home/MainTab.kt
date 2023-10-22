@@ -1,41 +1,35 @@
 package com.pepl.home
 
 import com.pepl.chat.navigation.ChatRoute
+import com.pepl.plant.navigation.PlantRoute
 import com.pepl.diary.navigation.DiaryRoute
-import com.pepl.dictionary.navigation.DictionaryRoute
-import com.pepl.friend.navigation.FriendRoute
+import com.pepl.setting.navigation.SettingRoute
 import com.pepl.greenmate.feature.home.R
-import com.pepl.manage.navigation.ManageRoute
 
 internal enum class MainTab(
     val iconResId: Int,
     internal val contentDescription: String,
     val route: String,
 ) {
-    FRIEND(
-        iconResId = R.drawable.ic_friend,
-        contentDescription = "친구",
-        FriendRoute.route,
-    ),
     CHAT(
         iconResId = R.drawable.ic_chat,
         contentDescription = "채팅",
         ChatRoute.route
     ),
+    PLANT(
+        iconResId = R.drawable.ic_plant,
+        contentDescription = "식물관리",
+        PlantRoute.route,
+    ),
     DIARY(
         iconResId = R.drawable.ic_diary,
-        contentDescription = "채팅",
+        contentDescription = "다이어리",
         DiaryRoute.route
     ),
-    DICTIONARY(
-        iconResId = R.drawable.ic_dictionary,
-        contentDescription = "채팅",
-        DictionaryRoute.route
-    ),
-    MANAGE(
-        iconResId = R.drawable.ic_manage,
-        contentDescription = "채팅",
-        ManageRoute.route
+    SETTING(
+        iconResId = R.drawable.ic_setting,
+        contentDescription = "설정",
+        SettingRoute.route
     );
 
     companion object {

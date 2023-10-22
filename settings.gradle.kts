@@ -29,11 +29,10 @@ include(
     ":core:datastore",
 
     ":feature:home",
-    ":feature:friend",
+    ":feature:plant",
     ":feature:chat",
     ":feature:diary",
-    ":feature:dictionary",
-    ":feature:manage",
+    ":feature:setting",
 
 )
 include(":core:domain")

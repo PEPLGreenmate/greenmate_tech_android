@@ -2,7 +2,6 @@ package com.pepl.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -11,10 +10,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.pepl.chat.navigation.navigateChat
 import com.pepl.diary.navigation.navigateDiary
-import com.pepl.dictionary.navigation.navigateDictionary
-import com.pepl.friend.navigation.FriendRoute
-import com.pepl.friend.navigation.navigateFriend
-import com.pepl.manage.navigation.navigateManage
+import com.pepl.plant.navigation.PlantRoute
+import com.pepl.plant.navigation.navigatePlant
+import com.pepl.setting.navigation.navigateSetting
 
 internal class MainNavigator(
     val navController: NavHostController,
@@ -22,7 +20,7 @@ internal class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = MainTab.FRIEND.route
+    val startDestination = MainTab.PLANT.route
 
     val currentTab: MainTab?
         @Composable get() = currentDestination
@@ -39,11 +37,10 @@ internal class MainNavigator(
         }
 
         when (tab) {
-            MainTab.FRIEND -> navController.navigateFriend(navOptions)
             MainTab.CHAT -> navController.navigateChat(navOptions)
+            MainTab.PLANT -> navController.navigatePlant(navOptions)
             MainTab.DIARY -> navController.navigateDiary(navOptions)
-            MainTab.DICTIONARY -> navController.navigateDictionary(navOptions)
-            MainTab.MANAGE -> navController.navigateManage(navOptions)
+            MainTab.SETTING -> navController.navigateSetting(navOptions)
         }
     }
 
@@ -52,7 +49,7 @@ internal class MainNavigator(
     }
 
     fun popBackStackIfNotHome() {
-        if (!isSameCurrentDestination(FriendRoute.route)) {
+        if (!isSameCurrentDestination(PlantRoute.route)) {
             popBackStack()
         }
     }
