@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.pepl.domain.usecase.GetFriendUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,16 +16,15 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class ChatViewModel @Inject constructor(
+class ChatDetailViewModel @Inject constructor(
     getFriendsUseCase: GetFriendUseCase,
 ) : ViewModel() {
-
     private val _errorFlow = MutableSharedFlow<Throwable>()
     val errorFlow: SharedFlow<Throwable> get() = _errorFlow
 
-    val chatUiState: StateFlow<ChatUiState> = flow { emit(getFriendsUseCase()) }
+    val chatDetailUiState: StateFlow<ChatDetailUiState> = flow { emit(getFriendsUseCase()) }
         .map { chats ->
-            ChatUiState.Empty
+            ChatDetailUiState.Empty
         }
         .catch { throwable ->
             _errorFlow.emit(throwable)
@@ -32,6 +32,6 @@ class ChatViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = ChatUiState.Loading,
+            initialValue = ChatDetailUiState.Loading,
         )
 }

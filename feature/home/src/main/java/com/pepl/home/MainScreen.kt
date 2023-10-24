@@ -77,8 +77,8 @@ internal fun MainScreen(
                 ) {
                     chatNavGraph(
                         padding = padding,
-                        onSessionClick = {},
-                        onContributorClick = {},
+                        onBackClick = {},
+                        onChatRoomClick = { navigator.navigateChatDetail(it.roomId) },
                         onShowErrorSnackBar = onShowErrorSnackBar
                     )
                     plantNavGraph(

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,51 +31,58 @@ import com.pepl.designsystem.theme.Gray
 import com.pepl.designsystem.theme.GreenMateTheme
 import com.pepl.designsystem.theme.MainGreen
 import com.pepl.designsystem.theme.Typography
+import com.pepl.designsystem.theme.White
 import com.pepl.greenmate.feature.chat.R
 
 @Composable
 fun ChatRoomItem(
+    onChatRoomClick: (RecentChat) -> Unit = {},
     recentChat: RecentChat,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                PaddingValues(start = 28.dp, top = 18.dp, end = 28.dp, bottom = 18.dp)
-            ),
+    Surface(
+        onClick = { onChatRoomClick(recentChat) }
     ) {
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(White)
+                .padding(
+                    PaddingValues(start = 28.dp, top = 18.dp, end = 28.dp, bottom = 18.dp)
+                )
         ) {
-            NetworkImage(
-                imageUrl = "",
-                placeholder = ColorPainter(Gray),
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(Gray)
-                    .clickable(onClick = {})
-            )
-            Spacer(
-                modifier = Modifier.width(13.dp)
-            )
-            ChatRecent(
-                modifier = Modifier
-                    .width(0.dp)
-                    .weight(1F),
-                recentChat = recentChat
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                NetworkImage(
+                    imageUrl = "",
+                    placeholder = ColorPainter(Gray),
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(Gray)
+                        .clickable(onClick = {})
+                )
+                Spacer(
+                    modifier = Modifier.width(13.dp)
+                )
+                ChatRecent(
+                    modifier = Modifier
+                        .width(0.dp)
+                        .weight(1F),
+                    recentChat = recentChat
+                )
+            }
+
+            if (recentChat.isLacked) {
+                ChatLackImage(
+                    modifier = Modifier
+                        .align(Alignment.TopStart),
+                    recentChat.lackedAttribute
+                )
+            }
         }
 
-        if (recentChat.isLacked) {
-            ChatLackImage(
-                modifier = Modifier
-                    .align(Alignment.TopStart),
-                recentChat.lackedAttribute
-            )
-        }
 
     }
 }
@@ -190,7 +198,7 @@ private fun ChatLackImage(
 
 @Preview
 @Composable
-private fun BookmarkCardPreview() {
+private fun ChatRoomItemPreview() {
     GreenMateTheme {
         Box {
             ChatRoomItem(
@@ -201,6 +209,7 @@ private fun BookmarkCardPreview() {
 }
 
 data class RecentChat(
+    val roomId: String = "",
     val imageUrl: String? = null,
     val isLacked: Boolean = true,
     val lackedAttribute: String = "water",

@@ -9,6 +9,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.pepl.chat.navigation.navigateChat
+import com.pepl.chat.navigation.navigateChatDetail
 import com.pepl.diary.navigation.navigateDiary
 import com.pepl.plant.navigation.PlantRoute
 import com.pepl.plant.navigation.navigatePlant
@@ -42,6 +43,10 @@ internal class MainNavigator(
             MainTab.DIARY -> navController.navigateDiary(navOptions)
             MainTab.SETTING -> navController.navigateSetting(navOptions)
         }
+    }
+
+    fun navigateChatDetail(roomId: String) {
+        navController.navigateChatDetail(roomId)
     }
 
     fun popBackStack() {
