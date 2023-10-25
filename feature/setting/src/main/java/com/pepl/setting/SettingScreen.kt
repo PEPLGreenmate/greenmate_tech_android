@@ -19,8 +19,6 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 internal fun SettingRoute(
     padding: PaddingValues,
-    onSessionClick: () -> Unit,
-    onContributorClick: () -> Unit,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     viewModel: SettingViewModel = hiltViewModel(),
 ) {
@@ -33,8 +31,6 @@ internal fun SettingRoute(
     SettingScreen(
         padding = padding,
         settingUiState = settingUiState,
-        onSessionClick = onSessionClick,
-        onContributorClick = onContributorClick,
     )
 }
 
@@ -42,8 +38,6 @@ internal fun SettingRoute(
 private fun SettingScreen(
     padding: PaddingValues,
     settingUiState: SettingUiState,
-    onSessionClick: () -> Unit,
-    onContributorClick: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -55,8 +49,5 @@ private fun SettingScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(text = "Setting")
-//        SessionCard(onClick = onSessionClick)
-//        ContributorCard(onClick = onContributorClick)
-//        SponsorCard(uiState = sponsorsUiState)
     }
 }

@@ -13,15 +13,11 @@ fun NavController.navigateDiary(navOptions: NavOptions) {
 
 fun NavGraphBuilder.diaryNavGraph(
     padding: PaddingValues,
-    onSessionClick: () -> Unit,
-    onContributorClick: () -> Unit,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
 ) {
     composable(route = DiaryRoute.route) {
         DiaryRoute(
             padding,
-            onSessionClick,
-            onContributorClick,
             onShowErrorSnackBar
         )
     }

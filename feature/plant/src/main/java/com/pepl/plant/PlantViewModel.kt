@@ -24,10 +24,10 @@ class PlantViewModel @Inject constructor(
 
     val plantUiState: StateFlow<PlantUiState> = flow { emit(getFriendsUseCase()) }
         .map { plants ->
-//            if (friends.isNotEmpty()) {
-//                FriendsUiState.Friends(friends)
+//            if (plants.isNotEmpty()) {
+//                PlantUiState.Plants(plants)
 //            } else {
-//                FriendsUiState.Empty
+//                PlantUiState.Empty
 //            }
             PlantUiState.Empty
         }

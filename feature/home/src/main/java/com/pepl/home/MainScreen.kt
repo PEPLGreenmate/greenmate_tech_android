@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
@@ -83,20 +84,14 @@ internal fun MainScreen(
                     )
                     plantNavGraph(
                         padding = padding,
-                        onSessionClick = {},
-                        onContributorClick = {},
                         onShowErrorSnackBar = onShowErrorSnackBar
                     )
                     diaryNavGraph(
                         padding = padding,
-                        onSessionClick = {},
-                        onContributorClick = {},
                         onShowErrorSnackBar = onShowErrorSnackBar
                     )
                     settingNavGraph(
                         padding = padding,
-                        onSessionClick = {},
-                        onContributorClick = {},
                         onShowErrorSnackBar = onShowErrorSnackBar
                     )
                 }
@@ -157,7 +152,7 @@ private fun RowScope.MainBottomBarItem(
             .selectable(
                 selected = selected,
                 indication = null,
-                role = null,
+                role = Role.Tab,
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = onClick,
             ),

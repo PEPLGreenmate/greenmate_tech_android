@@ -30,25 +30,26 @@ import com.pepl.designsystem.theme.Gray
 import com.pepl.designsystem.theme.GreenMateTheme
 import com.pepl.designsystem.theme.Typography
 import com.pepl.greenmate.feature.chat.R
+import com.pepl.model.ChatRoom
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 internal fun ChatRoute(
     padding: PaddingValues,
-    onChatRoomClick: (RecentChat) -> Unit,
+    onChatRoomClick: (ChatRoom) -> Unit,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     viewModel: ChatViewModel = hiltViewModel(),
 ) {
     val chatUiState by viewModel.chatUiState.collectAsStateWithLifecycle()
 
-    val recentChats = listOf(RecentChat(), RecentChat(), RecentChat())
+    val chatRooms = listOf(ChatRoom.createEmpty(), ChatRoom.createEmpty(), ChatRoom.createEmpty())
     LaunchedEffect(true) {
         viewModel.errorFlow.collectLatest { throwable -> onShowErrorSnackBar(throwable) }
     }
 
     ChatScreen(
         padding = padding,
-        recentChats = recentChats,
+        chatRooms = chatRooms,
         chatUiState = chatUiState,
         onChatRoomClick = onChatRoomClick,
     )
@@ -57,9 +58,9 @@ internal fun ChatRoute(
 @Composable
 private fun ChatScreen(
     padding: PaddingValues,
-    recentChats: List<RecentChat>,
+    chatRooms: List<ChatRoom>,
     chatUiState: ChatUiState,
-    onChatRoomClick: (RecentChat) -> Unit,
+    onChatRoomClick: (ChatRoom) -> Unit,
 ) {
     Column(
         Modifier
@@ -74,10 +75,10 @@ private fun ChatScreen(
                 .padding(top = 15.dp, bottom = 15.dp, start = 16.dp, end = 16.dp)
         )
         LazyColumn {
-            items(recentChats) { recentChat ->
+            items(chatRooms) { chatRoom ->
                 ChatRoomItem(
                     onChatRoomClick = onChatRoomClick,
-                    recentChat = recentChat,
+                    chatRoom = chatRoom,
                 )
             }
         }
@@ -138,9 +139,9 @@ private fun ChatHeaderPreview() {
 private fun ChatScreenPreview() {
     GreenMateTheme {
         LazyColumn {
-            items(listOf(RecentChat(), RecentChat(), RecentChat())) { recentChat ->
+            items(listOf(ChatRoom.createEmpty(), ChatRoom.createEmpty(), ChatRoom.createEmpty())) { chatRoom ->
                 ChatRoomItem(
-                    recentChat = recentChat,
+                    chatRoom = chatRoom,
                 )
             }
         }

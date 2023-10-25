@@ -19,8 +19,6 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 internal fun DiaryRoute(
     padding: PaddingValues,
-    onSessionClick: () -> Unit,
-    onContributorClick: () -> Unit,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     viewModel: DiaryViewModel = hiltViewModel(),
 ) {
@@ -33,17 +31,13 @@ internal fun DiaryRoute(
     DiaryScreen(
         padding = padding,
         diaryUiState = diaryUiState,
-        onSessionClick = onSessionClick,
-        onContributorClick = onContributorClick,
     )
 }
 
 @Composable
 private fun DiaryScreen(
     padding: PaddingValues,
-    diaryUiState: DiaryUiState,
-    onSessionClick: () -> Unit,
-    onContributorClick: () -> Unit,
+    diaryUiState: DiaryUiState
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -55,8 +49,5 @@ private fun DiaryScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(text = "Diary")
-//        SessionCard(onClick = onSessionClick)
-//        ContributorCard(onClick = onContributorClick)
-//        SponsorCard(uiState = sponsorsUiState)
     }
 }

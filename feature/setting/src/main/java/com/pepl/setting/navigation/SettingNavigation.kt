@@ -13,15 +13,11 @@ fun NavController.navigateSetting(navOptions: NavOptions) {
 
 fun NavGraphBuilder.settingNavGraph(
     padding: PaddingValues,
-    onSessionClick: () -> Unit,
-    onContributorClick: () -> Unit,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
 ) {
     composable(route = SettingRoute.route) {
         SettingRoute(
             padding,
-            onSessionClick,
-            onContributorClick,
             onShowErrorSnackBar
         )
     }

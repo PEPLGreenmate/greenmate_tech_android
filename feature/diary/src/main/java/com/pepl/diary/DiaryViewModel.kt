@@ -24,10 +24,10 @@ class DiaryViewModel @Inject constructor(
 
     val diaryUiState: StateFlow<DiaryUiState> = flow { emit(getFriendsUseCase()) }
         .map { diaries ->
-//            if (friends.isNotEmpty()) {
-//                FriendsUiState.Friends(friends)
+//            if (diaries.isNotEmpty()) {
+//                DiaryUiState.Diary(diaries)
 //            } else {
-//                FriendsUiState.Empty
+//                DiaryUiState.Empty
 //            }
             DiaryUiState.Empty
         }

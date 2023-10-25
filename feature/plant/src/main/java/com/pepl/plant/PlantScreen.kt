@@ -19,8 +19,6 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 internal fun PlantRoute(
     padding: PaddingValues,
-    onSessionClick: () -> Unit,
-    onContributorClick: () -> Unit,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
     viewModel: PlantViewModel = hiltViewModel(),
 ) {
@@ -32,18 +30,14 @@ internal fun PlantRoute(
 
     PlantScreen(
         padding = padding,
-        friendUiState = plantUiState,
-        onSessionClick = onSessionClick,
-        onContributorClick = onContributorClick,
+        plantUiState = plantUiState,
     )
 }
 
 @Composable
 private fun PlantScreen(
     padding: PaddingValues,
-    friendUiState: PlantUiState,
-    onSessionClick: () -> Unit,
-    onContributorClick: () -> Unit,
+    plantUiState: PlantUiState,
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -55,8 +49,5 @@ private fun PlantScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(text = "Plant")
-//        SessionCard(onClick = onSessionClick)
-//        ContributorCard(onClick = onContributorClick)
-//        SponsorCard(uiState = sponsorsUiState)
     }
 }

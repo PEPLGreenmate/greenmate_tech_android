@@ -24,10 +24,10 @@ class SettingViewModel @Inject constructor(
 
     val settingUiState: StateFlow<SettingUiState> = flow { emit(getFriendsUseCase()) }
         .map { settings ->
-//            if (friends.isNotEmpty()) {
-//                FriendsUiState.Friends(friends)
+//            if (settings.isNotEmpty()) {
+//                SettingUiState.Setting(settings)
 //            } else {
-//                FriendsUiState.Empty
+//                SettingUiState.Empty
 //            }
             SettingUiState.Empty
         }

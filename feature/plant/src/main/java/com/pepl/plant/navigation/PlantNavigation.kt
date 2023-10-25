@@ -14,15 +14,11 @@ fun NavController.navigatePlant(navOptions: NavOptions) {
 
 fun NavGraphBuilder.plantNavGraph(
     padding: PaddingValues,
-    onSessionClick: () -> Unit,
-    onContributorClick: () -> Unit,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
 ) {
     composable(route = PlantRoute.route) {
         PlantRoute(
             padding,
-            onSessionClick,
-            onContributorClick,
             onShowErrorSnackBar
         )
     }

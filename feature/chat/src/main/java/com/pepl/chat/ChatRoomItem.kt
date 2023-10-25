@@ -33,14 +33,15 @@ import com.pepl.designsystem.theme.MainGreen
 import com.pepl.designsystem.theme.Typography
 import com.pepl.designsystem.theme.White
 import com.pepl.greenmate.feature.chat.R
+import com.pepl.model.ChatRoom
 
 @Composable
 fun ChatRoomItem(
-    onChatRoomClick: (RecentChat) -> Unit = {},
-    recentChat: RecentChat,
+    onChatRoomClick: (ChatRoom) -> Unit = {},
+    chatRoom: ChatRoom,
 ) {
     Surface(
-        onClick = { onChatRoomClick(recentChat) }
+        onClick = { onChatRoomClick(chatRoom) }
     ) {
         Box(
             modifier = Modifier
@@ -70,15 +71,15 @@ fun ChatRoomItem(
                     modifier = Modifier
                         .width(0.dp)
                         .weight(1F),
-                    recentChat = recentChat
+                    chatRoom = chatRoom
                 )
             }
 
-            if (recentChat.isLacked) {
+            if (chatRoom.isLacked) {
                 ChatLackImage(
                     modifier = Modifier
                         .align(Alignment.TopStart),
-                    recentChat.lackedAttribute
+                    chatRoom.lackedAttribute
                 )
             }
         }
@@ -90,7 +91,7 @@ fun ChatRoomItem(
 @Composable
 private fun ChatRecent(
     modifier: Modifier = Modifier,
-    recentChat: RecentChat,
+    chatRoom: ChatRoom,
 ) {
     Column(
         modifier = modifier
@@ -103,12 +104,12 @@ private fun ChatRecent(
         ) {
             Text(
                 modifier = Modifier.weight(1F),
-                text = recentChat.plantName,
+                text = chatRoom.plantName,
                 style = Typography.bodyLarge,
                 color = BLACK
             )
             Text(
-                text = recentChat.lastSendTime,
+                text = chatRoom.lastSendTime,
                 style = Typography.bodySmall,
                 color = DarkBrown
             )
@@ -119,11 +120,11 @@ private fun ChatRecent(
         ) {
             Text(
                 modifier = Modifier.weight(1F),
-                text = recentChat.recentChat,
+                text = chatRoom.lastMessage,
                 style = Typography.bodyMedium,
                 color = DarkBrown
             )
-            if (recentChat.isRead.not()) {
+            if (chatRoom.isRead.not()) {
                 Box(
                     modifier = Modifier
                         .background(color = MainGreen, shape = CircleShape)
@@ -202,19 +203,9 @@ private fun ChatRoomItemPreview() {
     GreenMateTheme {
         Box {
             ChatRoomItem(
-                recentChat = RecentChat(),
+                chatRoom = ChatRoom.createEmpty(),
             )
         }
     }
 }
 
-data class RecentChat(
-    val roomId: String = "",
-    val imageUrl: String? = null,
-    val isLacked: Boolean = true,
-    val lackedAttribute: String = "water",
-    val plantName: String = "페플이",
-    val lastSendTime: String = "08:30",
-    val recentChat: String = "나 목말라! 물이 필요해!",
-    val isRead: Boolean = false,
-)
