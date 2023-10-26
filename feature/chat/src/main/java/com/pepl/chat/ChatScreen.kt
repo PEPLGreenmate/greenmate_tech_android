@@ -155,6 +155,7 @@ private fun ChatHeaderPreview() {
 }
 
 
+@Preview
 @Composable
 private fun ChatScreenPreview() {
     GreenMateTheme {

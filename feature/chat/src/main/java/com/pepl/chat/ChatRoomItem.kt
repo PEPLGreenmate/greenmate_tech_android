@@ -56,7 +56,7 @@ fun ChatRoomItem(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 NetworkImage(
-                    imageUrl = "",
+                    imageUrl = chatRoom.plantImageUrl,
                     placeholder = ColorPainter(Gray),
                     modifier = Modifier
                         .size(40.dp)
