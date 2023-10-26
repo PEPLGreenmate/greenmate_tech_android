@@ -1,6 +1,5 @@
 package com.pepl.data.api.model
 
-import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,6 +33,7 @@ import com.pepl.designsystem.theme.GreenMateTheme
 import com.pepl.designsystem.theme.Typography
 import com.pepl.greenmate.feature.chat.R
 import com.pepl.model.ChatRoom
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -42,14 +45,12 @@ internal fun ChatRoute(
 ) {
     val chatUiState by viewModel.chatUiState.collectAsStateWithLifecycle()
 
-    val chatRooms = listOf(ChatRoom.createEmpty(), ChatRoom.createEmpty(), ChatRoom.createEmpty())
     LaunchedEffect(true) {
         viewModel.errorFlow.collectLatest { throwable -> onShowErrorSnackBar(throwable) }
     }
 
     ChatScreen(
         padding = padding,
-        chatRooms = chatRooms,
         chatUiState = chatUiState,
         onChatRoomClick = onChatRoomClick,
     )
@@ -58,7 +59,6 @@ internal fun ChatRoute(
 @Composable
 private fun ChatScreen(
     padding: PaddingValues,
-    chatRooms: List<ChatRoom>,
     chatUiState: ChatUiState,
     onChatRoomClick: (ChatRoom) -> Unit,
 ) {
@@ -74,14 +74,34 @@ private fun ChatScreen(
                 .fillMaxWidth()
                 .padding(top = 15.dp, bottom = 15.dp, start = 16.dp, end = 16.dp)
         )
-        LazyColumn {
-            items(chatRooms) { chatRoom ->
-                ChatRoomItem(
-                    onChatRoomClick = onChatRoomClick,
-                    chatRoom = chatRoom,
-                )
+
+        when (chatUiState) {
+            ChatUiState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            is ChatUiState.Empty -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = "채팅할 수 있는 식물이 없습니다"
+                    )
+                }
+            }
+
+            is ChatUiState.ChatRoom -> {
+                LazyColumn {
+                    items(chatUiState.chatRooms.toPersistentList()) { chatRoom ->
+                        ChatRoomItem(
+                            onChatRoomClick = onChatRoomClick,
+                            chatRoom = chatRoom,
+                        )
+                    }
+                }
             }
         }
+
     }
 }
 
@@ -139,7 +159,13 @@ private fun ChatHeaderPreview() {
 private fun ChatScreenPreview() {
     GreenMateTheme {
         LazyColumn {
-            items(listOf(ChatRoom.createEmpty(), ChatRoom.createEmpty(), ChatRoom.createEmpty())) { chatRoom ->
+            items(
+                listOf(
+                    ChatRoom.createEmpty(),
+                    ChatRoom.createEmpty(),
+                    ChatRoom.createEmpty()
+                )
+            ) { chatRoom ->
                 ChatRoomItem(
                     chatRoom = chatRoom,
                 )

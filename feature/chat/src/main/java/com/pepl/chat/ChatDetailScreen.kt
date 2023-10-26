@@ -1,23 +1,31 @@
 package com.pepl.chat
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -30,8 +38,10 @@ import com.pepl.designsystem.theme.BLACK
 import com.pepl.designsystem.theme.BackgroundGreen
 import com.pepl.designsystem.theme.Gray
 import com.pepl.designsystem.theme.MainGreen
+import com.pepl.designsystem.theme.Typography
 import com.pepl.designsystem.theme.White
 import com.pepl.model.Chat
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -50,6 +60,7 @@ internal fun ChatDetailRoute(
 
     ChatDetailScreen(
         padding = padding,
+        chatDetailUiState = chatDetailUiState,
         chatRoomId = chatRoomId,
         onBackClick = onBackClick
     )
@@ -58,25 +69,67 @@ internal fun ChatDetailRoute(
 @Composable
 internal fun ChatDetailScreen(
     padding: PaddingValues,
+    chatDetailUiState: ChatDetailUiState,
     chatRoomId: String,
     onBackClick: () -> Unit,
     viewModel: ChatDetailViewModel = hiltViewModel(),
 ) {
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(BackgroundGreen)
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp),
+            horizontalArrangement = Arrangement.Center,
         ) {
-            PlantChat(chat = Chat(true, "", "페플", "04:40", "안녕!"))
-            UserChat(chat = Chat(false, "", "user", "04:42", "안녕!"))
-            PlantChat(chat = Chat(true, "", "페플", "04:43", "안녕!"))
-            UserChat(chat = Chat(false, "", "user", "04:44", "안녕!"))
+            Text(
+                text = "페풀이",
+                style = Typography.titleLarge,
+            )
+        }
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 10.dp),
+        )
+        when (chatDetailUiState) {
+            ChatDetailUiState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            is ChatDetailUiState.Empty -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = "채팅이 없습니다"
+                    )
+                }
+            }
+
+            is ChatDetailUiState.Chat -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(13.dp)
+                ) {
+                    items(chatDetailUiState.chats.toPersistentList()) { chat ->
+                        if (chat.isPlantChat) {
+                            PlantChat(chat = chat)
+                        } else {
+                            UserChat(chat = chat)
+                        }
+                    }
+                }
+            }
         }
     }
+
 }
 
 @Composable
@@ -84,7 +137,9 @@ internal fun PlantChat(
     chat: Chat,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(space = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         NetworkImage(
             imageUrl = "",
@@ -95,13 +150,19 @@ internal fun PlantChat(
                 .background(Gray)
                 .clickable(onClick = {})
         )
-        Text(
-            text = chat.message,
-            modifier = Modifier.background(MainGreen),
-            color = White
-        )
-    }
 
+        Surface(
+            shape = RoundedCornerShape(32.dp),
+            color = MainGreen
+        ) {
+            Text(
+                text = chat.message,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 5.dp),
+                color = White
+            )
+        }
+    }
 }
 
 @Composable
@@ -109,14 +170,20 @@ internal fun UserChat(
     chat: Chat,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.End
     ) {
-        Text(
-            text = chat.message,
-            modifier = Modifier.background(Color.White),
-            color = BLACK
-        )
+        Surface(
+            shape = RoundedCornerShape(32.dp),
+            color = White
+        ) {
+            Text(
+                text = chat.message,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 5.dp),
+                color = BLACK
+            )
+        }
     }
-
 }

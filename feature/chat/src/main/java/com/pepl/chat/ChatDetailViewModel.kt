@@ -2,10 +2,10 @@ package com.pepl.chat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pepl.domain.usecase.GetFriendUseCase
+import com.pepl.domain.usecase.GetChatRoomsUseCase
+import com.pepl.domain.usecase.GetChatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -17,14 +17,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatDetailViewModel @Inject constructor(
-    getFriendsUseCase: GetFriendUseCase,
+    getChatsUseCase: GetChatsUseCase,
 ) : ViewModel() {
     private val _errorFlow = MutableSharedFlow<Throwable>()
     val errorFlow: SharedFlow<Throwable> get() = _errorFlow
 
-    val chatDetailUiState: StateFlow<ChatDetailUiState> = flow { emit(getFriendsUseCase()) }
+    val chatDetailUiState: StateFlow<ChatDetailUiState> = flow { emit(getChatsUseCase()) }
         .map { chats ->
-            ChatDetailUiState.Empty
+            if (chats.isNotEmpty()) {
+                ChatDetailUiState.Chat(chats)
+            } else {
+                ChatDetailUiState.Empty
+            }
         }
         .catch { throwable ->
             _errorFlow.emit(throwable)

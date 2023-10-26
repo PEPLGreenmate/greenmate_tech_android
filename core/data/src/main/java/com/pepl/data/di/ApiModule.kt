@@ -22,6 +22,12 @@ internal object ApiModule {
 
     @Provides
     @Singleton
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+    }
+
+    @Provides
+    @Singleton
     fun provideConverterFactory(
         json: Json,
     ): Converter.Factory {

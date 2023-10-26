@@ -2,7 +2,8 @@ package com.pepl.diary
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pepl.domain.usecase.GetFriendUseCase
+import com.pepl.domain.usecase.GetChatRoomsUseCase
+import com.pepl.domain.usecase.GetPlantsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -16,13 +17,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiaryViewModel @Inject constructor(
-    getFriendsUseCase: GetFriendUseCase,
+    getDiariesUseCase: GetPlantsUseCase,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
     val errorFlow: SharedFlow<Throwable> get() = _errorFlow
 
-    val diaryUiState: StateFlow<DiaryUiState> = flow { emit(getFriendsUseCase()) }
+    val diaryUiState: StateFlow<DiaryUiState> = flow { emit(getDiariesUseCase()) }
         .map { diaries ->
 //            if (diaries.isNotEmpty()) {
 //                DiaryUiState.Diary(diaries)

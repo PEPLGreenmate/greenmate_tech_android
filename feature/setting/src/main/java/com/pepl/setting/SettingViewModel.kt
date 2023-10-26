@@ -2,7 +2,8 @@ package com.pepl.setting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pepl.domain.usecase.GetFriendUseCase
+import com.pepl.domain.usecase.GetChatRoomsUseCase
+import com.pepl.domain.usecase.GetPlantsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -16,13 +17,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
-    getFriendsUseCase: GetFriendUseCase,
+    getSettingsUseCase: GetPlantsUseCase,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
     val errorFlow: SharedFlow<Throwable> get() = _errorFlow
 
-    val settingUiState: StateFlow<SettingUiState> = flow { emit(getFriendsUseCase()) }
+    val settingUiState: StateFlow<SettingUiState> = flow { emit(getSettingsUseCase()) }
         .map { settings ->
 //            if (settings.isNotEmpty()) {
 //                SettingUiState.Setting(settings)
