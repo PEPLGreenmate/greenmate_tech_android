@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pepl.designsystem.theme.Gray
+import com.pepl.designsystem.theme.MainGreen
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.coil.CoilImage
 import com.skydoves.landscapist.components.rememberImageComponent
@@ -43,3 +44,5 @@ fun NetworkImage(
         )
     )
 }
+
+

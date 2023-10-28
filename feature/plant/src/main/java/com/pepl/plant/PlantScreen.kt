@@ -84,7 +84,7 @@ private fun PlantScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             NetworkImage(
-                imageUrl = "https://unsplash.com/ko/%EC%82%AC%EC%A7%84/%EA%B0%88%EC%83%89-%EB%82%98%EB%AC%B4-%EA%BD%83%EB%B3%91%EC%97%90-%EB%85%B9%EC%83%89-%EC%8B%9D%EB%AC%BC-Ebwp2-6BG8E",
+                imageUrl = "https://images.unsplash.com/photo-1512428813834-c702c7702b78?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 placeholder = ColorPainter(Gray),
                 modifier = Modifier
                     .size(80.dp)

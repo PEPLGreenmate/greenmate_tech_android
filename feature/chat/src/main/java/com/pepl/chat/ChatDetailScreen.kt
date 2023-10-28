@@ -75,7 +75,6 @@ internal fun ChatDetailScreen(
     onBackClick: () -> Unit,
     viewModel: ChatDetailViewModel = hiltViewModel(),
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -142,7 +141,7 @@ internal fun PlantChat(
         verticalAlignment = Alignment.CenterVertically
     ) {
         NetworkImage(
-            imageUrl = "",
+            imageUrl = chat.imageUrl,
             placeholder = ColorPainter(Gray),
             modifier = Modifier
                 .size(40.dp)
