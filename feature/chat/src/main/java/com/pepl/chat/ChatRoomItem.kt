@@ -197,7 +197,6 @@ private fun ChatLackImage(
 }
 
 
-@Preview
 @Composable
 private fun ChatRoomItemPreview() {
     GreenMateTheme {
