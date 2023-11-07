@@ -1,57 +1,57 @@
 package com.pepl.plant
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults.elevatedCardColors
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.lerp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pepl.designsystem.component.NetworkImage
 import com.pepl.designsystem.theme.BackgroundGreen
 import com.pepl.designsystem.theme.Gray
 import com.pepl.designsystem.theme.GreenMateTheme
-import com.pepl.designsystem.theme.MainGreen
 import com.pepl.designsystem.theme.Typography
+import com.pepl.designsystem.theme.White
 import com.pepl.greenmate.feature.plant.R
 import com.pepl.model.Plant
 import com.pepl.model.PlantStatus
 import kotlinx.coroutines.flow.collectLatest
+import kotlin.math.absoluteValue
 
 @Composable
 internal fun PlantRoute(
@@ -153,25 +153,61 @@ fun PlantHeader(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlantContents(
     modifier: Modifier,
     plants: List<Plant>,
 ) {
+//    LaunchedEffect(pagerState) {
+//        // Collect from the a snapshotFlow reading the currentPage
+//        snapshotFlow { pagerState.currentPage }.collect { page ->
+//            // Do something with each page change, for example:
+//            // viewModel.sendPageSelectedEvent(page)
+//            Log.d("Page change", "Page changed to $page")
+//        }
+//    }
+
+    val pagerState = rememberPagerState()
+    val contentPadding = (LocalConfiguration.current.screenWidthDp.dp - 168.dp) / 2
     Box(
         modifier = modifier
             .fillMaxHeight(1F)
     ) {
         Column {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentPadding = PaddingValues(start = 12.dp, end = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(24.dp)
-            ) {
-                items(plants) { plant ->
-                    PlantRowItem(plant, onItemClick = {}, modifier = Modifier)
-                }
+            HorizontalPager(
+                state = pagerState,
+                pageCount = plants.size,
+                contentPadding = PaddingValues(horizontal = contentPadding),
+                pageSpacing = 40.dp
+            ) { index ->
+
+                PlantRowItem(plants[index],
+                    onItemClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .graphicsLayer {
+                            val pageOffset = (
+                                    (pagerState.currentPage - index) + pagerState
+                                        .currentPageOffsetFraction
+                                    ).absoluteValue
+                            lerp(
+                                start = 0.85f.dp,
+                                stop = 1f.dp,
+                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                            ).also { scale ->
+                                scaleX = scale.value
+                                scaleY = scale.value
+                            }
+
+                            alpha = lerp(
+                                start = 0.75f.dp,
+                                stop = 1f.dp,
+                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                            ).value
+
+                        }
+                )
             }
             Spacer(modifier = Modifier.height(19.dp))
             Column(
@@ -220,15 +256,17 @@ fun PlantRowItem(
     onItemClick: (Plant) -> Unit,
     modifier: Modifier,
 ) {
-    Surface(
-        modifier = Modifier
-            .size(width = 168.dp, height = 219.dp),
+    Card(
+        modifier = Modifier.wrapContentHeight(),
         shape = RoundedCornerShape(15.dp),
-        color = BackgroundGreen,
+        colors = elevatedCardColors(containerColor = White)
     ) {
         NetworkImage(
             imageUrl = "https://images.unsplash.com/photo-1512428813834-c702c7702b78?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            modifier = Modifier.fillMaxSize()
+            modifier = modifier
+                .aspectRatio(2 / 3f)
+                .width(169.dp)
+                .clip(RoundedCornerShape(15.dp))
         )
     }
 }
