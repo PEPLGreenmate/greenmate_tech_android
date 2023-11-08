@@ -33,6 +33,7 @@ import com.pepl.designsystem.theme.GreenMateTheme
 import com.pepl.designsystem.theme.Typography
 import com.pepl.greenmate.feature.chat.R
 import com.pepl.model.ChatRoom
+import com.pepl.ui.LoadingScreen
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.collectLatest
 
@@ -77,9 +78,7 @@ private fun ChatScreen(
 
         when (chatUiState) {
             ChatUiState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-                }
+                LoadingScreen()
             }
 
             is ChatUiState.Empty -> {

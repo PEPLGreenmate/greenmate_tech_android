@@ -18,11 +18,21 @@ object DataStoreModule {
     private const val PLANT_DATASTORE_NAME = "PLANT_PREFERENCES"
     private val Context.plantDataStore by preferencesDataStore(PLANT_DATASTORE_NAME)
 
+    private const val GARDEN_DATASTORE_NAME = "GARDEN_PREFERENCES"
+    private val Context.gardenDataStore by preferencesDataStore(GARDEN_DATASTORE_NAME)
+
     @Provides
     @Singleton
     @Named("plant")
     fun providePlantDataStore(
         @ApplicationContext context: Context,
     ): DataStore<Preferences> = context.plantDataStore
+
+    @Provides
+    @Singleton
+    @Named("garden")
+    fun provideGardenDataStore(
+        @ApplicationContext context: Context,
+    ): DataStore<Preferences> = context.gardenDataStore
 
 }

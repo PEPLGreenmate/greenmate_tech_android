@@ -1,43 +1,68 @@
 package com.pepl.plant
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pepl.domain.usecase.GetChatRoomsUseCase
+import com.pepl.domain.usecase.GetLastGardenUseCase
 import com.pepl.domain.usecase.GetPlantsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class PlantViewModel @Inject constructor(
-    getPlantsUseCase: GetPlantsUseCase,
+    private val getPlantsUseCase: GetPlantsUseCase,
+    private val getLastGardenUseCase: GetLastGardenUseCase,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
     val errorFlow: SharedFlow<Throwable> get() = _errorFlow
 
-    val plantUiState: StateFlow<PlantUiState> = flow { emit(getPlantsUseCase()) }
-        .map { plants ->
-//            if (plants.isNotEmpty()) {
-//                PlantUiState.Plants(plants)
-//            } else {
-//                PlantUiState.Empty
-//            }
-            PlantUiState.Empty
+    private val _plantUiState =
+        MutableStateFlow<PlantUiState>(PlantUiState.Loading)
+    val plantUiState: StateFlow<PlantUiState> = _plantUiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            getLastGardenUseCase().flatMapLatest { lastGardenId ->
+                println("PlantViewModel $lastGardenId ")
+                flow { emit(getPlantsUseCase(lastGardenId)) }
+                    .flatMapLatest { plants ->
+                        if (lastGardenId.isEmpty()) {
+                            flowOf(PlantUiState.GardenEmpty)
+                        } else if (plants.isEmpty()) {
+                            flowOf(PlantUiState.Empty)
+                        } else {
+                            flowOf(
+                                PlantUiState.Plants(
+                                    gardenId = lastGardenId,
+                                    plants = plants
+                                )
+                            )
+                        }
+                    }
+            }.catch { throwable ->
+                _errorFlow.emit(throwable)
+            }.collect { combinedUiState ->
+                _plantUiState.value = combinedUiState
+            }
         }
-        .catch { throwable ->
-            _errorFlow.emit(throwable)
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = PlantUiState.Loading,
-        )
+    }
 }

@@ -2,6 +2,7 @@ package com.pepl.plant
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
@@ -50,6 +52,7 @@ import com.pepl.designsystem.theme.White
 import com.pepl.greenmate.feature.plant.R
 import com.pepl.model.Plant
 import com.pepl.model.PlantStatus
+import com.pepl.ui.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
 import kotlin.math.absoluteValue
 
@@ -65,16 +68,52 @@ internal fun PlantRoute(
         viewModel.errorFlow.collectLatest { throwable -> onShowErrorSnackBar(throwable) }
     }
 
-    PlantScreen(
-        padding = padding,
-        plantUiState = plantUiState,
-    )
+    when (plantUiState) {
+        PlantUiState.Loading -> {
+            LoadingScreen()
+        }
+
+        is PlantUiState.GardenEmpty -> {
+            EmptyGardenScreen(
+                padding = padding,
+            )
+        }
+
+        else -> {
+            PlantScreen(
+                padding = padding,
+                plantUiState = plantUiState,
+                onGridModeClick = {
+                    //viewModel.clickGridModeButton()
+                }
+            )
+        }
+
+    }
+
+}
+
+@Composable
+private fun EmptyGardenScreen(
+    padding: PaddingValues,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(padding), contentAlignment = Alignment.Center
+    ) {
+        Text(
+            textAlign = TextAlign.Center,
+            text = "그린메이트가 처음이신가요?\n정원을 만들어 식물을 추가해보세요!"
+        )
+    }
 }
 
 @Composable
 private fun PlantScreen(
     padding: PaddingValues,
     plantUiState: PlantUiState,
+    onGridModeClick: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -89,28 +128,31 @@ private fun PlantScreen(
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, top = 25.dp, bottom = 14.dp)
         )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 22.dp),
-            horizontalArrangement = Arrangement.End
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_grid),
-                contentDescription = "내 식물 리스트 그리드로 보기"
-            )
+        when (plantUiState) {
+            is PlantUiState.Empty -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(1F), contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        textAlign = TextAlign.Center,
+                        text = "아직 정원에 식물이 없습니다"
+                    )
+                }
+            }
+
+            is PlantUiState.Plants -> {
+                PlantContents(
+                    modifier = Modifier
+                        .padding(bottom = 59.dp),
+                    plants = plantUiState,
+                    onGridModeClick = onGridModeClick
+                )
+            }
+
+            else -> {}
         }
-        PlantContents(
-            modifier = Modifier
-                .padding(bottom = 59.dp),
-            plants = listOf(
-                Plant("", 0L, "", PlantStatus(0, 0, 0, 0)),
-                Plant("", 0L, "", PlantStatus(0, 0, 0, 0)),
-                Plant("", 0L, "", PlantStatus(0, 0, 0, 0)),
-                Plant("", 0L, "", PlantStatus(0, 0, 0, 0))
-            )
-        )
     }
 }
 
@@ -153,11 +195,11 @@ fun PlantHeader(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PlantContents(
     modifier: Modifier,
-    plants: List<Plant>,
+    plants: PlantUiState.Plants,
+    onGridModeClick: () -> Unit,
 ) {
 //    LaunchedEffect(pagerState) {
 //        // Collect from the a snapshotFlow reading the currentPage
@@ -168,71 +210,102 @@ fun PlantContents(
 //        }
 //    }
 
-    val pagerState = rememberPagerState()
-    val contentPadding = (LocalConfiguration.current.screenWidthDp.dp - 168.dp) / 2
+
     Box(
         modifier = modifier
             .fillMaxHeight(1F)
     ) {
         Column {
-            HorizontalPager(
-                state = pagerState,
-                pageCount = plants.size,
-                contentPadding = PaddingValues(horizontal = contentPadding),
-                pageSpacing = 40.dp
-            ) { index ->
-
-                PlantRowItem(plants[index],
-                    onItemClick = {},
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .graphicsLayer {
-                            val pageOffset = (
-                                    (pagerState.currentPage - index) + pagerState
-                                        .currentPageOffsetFraction
-                                    ).absoluteValue
-                            lerp(
-                                start = 0.85f.dp,
-                                stop = 1f.dp,
-                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                            ).also { scale ->
-                                scaleX = scale.value
-                                scaleY = scale.value
-                            }
-
-                            alpha = lerp(
-                                start = 0.75f.dp,
-                                stop = 1f.dp,
-                                fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                            ).value
-
-                        }
-                )
-            }
-            Spacer(modifier = Modifier.height(19.dp))
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 22.dp),
+                horizontalArrangement = Arrangement.End
             ) {
-                Text(
-                    text = "플래그먼트",
-                    style = Typography.titleLarge
+                Image(
+                    painter = painterResource(id = R.drawable.ic_grid),
+                    contentDescription = "내 식물 리스트 그리드로 보기",
+                    modifier = Modifier.clickable(onClick = onGridModeClick)
                 )
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    text = "2시간 전 기준",
-                    style = Typography.bodySmall,
-                    color = Gray
-                )
-                Spacer(modifier = Modifier.height(34.dp))
-                PlantStatusChart()
             }
 
+            if (plants.isGridMode) {
+                PlantGridMode()
+            } else {
+                PlantDetailMode(plants.plants)
+            }
+
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun PlantDetailMode(
+    plants: List<Plant>,
+) {
+    val pagerState = rememberPagerState()
+    val contentPadding = (LocalConfiguration.current.screenWidthDp.dp - 168.dp) / 2
+
+    Column() {
+        HorizontalPager(
+            state = pagerState,
+            pageCount = plants.size,
+            contentPadding = PaddingValues(horizontal = contentPadding),
+            pageSpacing = 40.dp
+        ) { index ->
+
+            PlantRowItem(
+                plants[index],
+                onItemClick = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .graphicsLayer {
+                        val pageOffset = (
+                                (pagerState.currentPage - index) + pagerState
+                                    .currentPageOffsetFraction
+                                ).absoluteValue
+                        lerp(
+                            start = 0.85f.dp,
+                            stop = 1f.dp,
+                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                        ).also { scale ->
+                            scaleX = scale.value
+                            scaleY = scale.value
+                        }
+
+                        alpha = lerp(
+                            start = 0.75f.dp,
+                            stop = 1f.dp,
+                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                        ).value
+
+                    }
+            )
+        }
+        Spacer(modifier = Modifier.height(19.dp))
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "플래그먼트",
+                style = Typography.titleLarge
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(
+                text = "2시간 전 기준",
+                style = Typography.bodySmall,
+                color = Gray
+            )
+            Spacer(modifier = Modifier.height(34.dp))
+            PlantStatusChart()
         }
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.BottomCenter)
+                .align(Alignment.CenterHorizontally)
         ) {
             PlantDetailButton(
                 "위치 옮기기",
@@ -248,6 +321,12 @@ fun PlantContents(
             )
         }
     }
+
+}
+
+@Composable
+fun PlantGridMode() {
+
 }
 
 @Composable
@@ -268,26 +347,5 @@ fun PlantRowItem(
                 .width(169.dp)
                 .clip(RoundedCornerShape(15.dp))
         )
-    }
-}
-
-@Preview
-@Composable
-fun PlantScreenPreview() {
-    GreenMateTheme {
-        Column {
-            PlantContents(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                plants = listOf(
-                    Plant("", 0L, "", PlantStatus(0, 0, 0, 0)),
-                    Plant("", 0L, "", PlantStatus(0, 0, 0, 0)),
-                    Plant("", 0L, "", PlantStatus(0, 0, 0, 0)),
-                    Plant("", 0L, "", PlantStatus(0, 0, 0, 0))
-                )
-
-            )
-        }
-
     }
 }
