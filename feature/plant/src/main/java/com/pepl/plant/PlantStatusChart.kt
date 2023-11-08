@@ -28,10 +28,11 @@ import com.pepl.designsystem.theme.Mint
 import com.pepl.designsystem.theme.RedPurple
 import com.pepl.designsystem.theme.Typography
 import com.pepl.greenmate.feature.plant.R
+import com.pepl.model.Plant
 
 @Composable
 fun PlantStatusChart(
-
+    plant: Plant,
 ) {
     Row(
         modifier = Modifier
@@ -40,38 +41,38 @@ fun PlantStatusChart(
     ) {
         PlantCharItem(
             "토양 수분",
-            0.7f,
+            plant.status.soil.toFloat() / 100,
             Mint,
             R.drawable.ic_soilwater,
             "토양 수분 아이콘",
-            "30%",
+            "${plant.status.soil}%",
             "적정"
         )
         PlantCharItem(
             "조도",
-            0.3f,
+            plant.status.light.toFloat() / 100,
             Gold,
             R.drawable.ic_sun,
             "조도 아이콘",
-            "150",
+            "${plant.status.light}",
             "적정"
         )
         PlantCharItem(
             "온도",
-            0.8f,
+            plant.status.temp.toFloat() / 100,
             RedPurple,
             R.drawable.ic_temperature,
             "온도 아이콘",
-            "34℃",
+            "${plant.status.temp}℃",
             "너무 더워요!"
         )
         PlantCharItem(
             "습도",
-            0.5f,
+            plant.status.humidity.toFloat() / 100,
             Blue,
             R.drawable.ic_humidity,
             "습도 아이콘",
-            "50%",
+            "${plant.status.humidity}%",
             "적정"
         )
     }
@@ -127,13 +128,5 @@ fun PlantCharItem(
             style = Typography.bodyMedium,
             color = Gray
         )
-    }
-}
-
-@Preview
-@Composable
-fun PlantChartPreview() {
-    GreenMateTheme {
-        PlantStatusChart()
     }
 }

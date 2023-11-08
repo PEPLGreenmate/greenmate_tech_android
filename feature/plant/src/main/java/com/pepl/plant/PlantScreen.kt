@@ -1,5 +1,6 @@
 package com.pepl.plant
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -31,6 +32,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -201,16 +205,6 @@ fun PlantContents(
     plants: PlantUiState.Plants,
     onGridModeClick: () -> Unit,
 ) {
-//    LaunchedEffect(pagerState) {
-//        // Collect from the a snapshotFlow reading the currentPage
-//        snapshotFlow { pagerState.currentPage }.collect { page ->
-//            // Do something with each page change, for example:
-//            // viewModel.sendPageSelectedEvent(page)
-//            Log.d("Page change", "Page changed to $page")
-//        }
-//    }
-
-
     Box(
         modifier = modifier
             .fillMaxHeight(1F)
@@ -248,6 +242,18 @@ fun PlantDetailMode(
     val pagerState = rememberPagerState()
     val contentPadding = (LocalConfiguration.current.screenWidthDp.dp - 168.dp) / 2
 
+    val currentPlant = remember { mutableStateOf(0) }
+
+    LaunchedEffect(pagerState) {
+        // Collect from the a snapshotFlow reading the currentPage
+        snapshotFlow { pagerState.currentPage }.collect { page ->
+            // Do something with each page change, for example:
+            // viewModel.sendPageSelectedEvent(page)
+            Log.d("Page change", "Page changed to $page")
+            currentPlant.value = page
+        }
+    }
+
     Column() {
         HorizontalPager(
             state = pagerState,
@@ -255,7 +261,6 @@ fun PlantDetailMode(
             contentPadding = PaddingValues(horizontal = contentPadding),
             pageSpacing = 40.dp
         ) { index ->
-
             PlantRowItem(
                 plants[index],
                 onItemClick = {},
@@ -285,11 +290,35 @@ fun PlantDetailMode(
             )
         }
         Spacer(modifier = Modifier.height(19.dp))
+        PlantDetails(
+            plant = plants[currentPlant.value]
+        )
+
+    }
+
+}
+
+@Composable
+fun PlantGridMode() {
+
+}
+
+@Composable
+fun PlantDetails(
+    plant: Plant,
+) {
+
+    Log.d("Page change", "detail changed $plant")
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(1F)
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "플래그먼트",
+                text = plant.name,
                 style = Typography.titleLarge
             )
             Spacer(modifier = Modifier.height(5.dp))
@@ -299,13 +328,15 @@ fun PlantDetailMode(
                 color = Gray
             )
             Spacer(modifier = Modifier.height(34.dp))
-            PlantStatusChart()
+            PlantStatusChart(
+                plant
+            )
         }
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
+                .align(Alignment.BottomCenter)
         ) {
             PlantDetailButton(
                 "위치 옮기기",
@@ -316,17 +347,11 @@ fun PlantDetailMode(
                 onClick = {}
             )
             PlantDetailButton(
-                "상태 체크하기l",
+                "상태 체크하기",
                 onClick = {}
             )
         }
     }
-
-}
-
-@Composable
-fun PlantGridMode() {
-
 }
 
 @Composable
