@@ -27,7 +27,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.elevatedCardColors
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,20 +41,16 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pepl.designsystem.component.NetworkImage
-import com.pepl.designsystem.theme.BackgroundGreen
 import com.pepl.designsystem.theme.Gray
-import com.pepl.designsystem.theme.GreenMateTheme
 import com.pepl.designsystem.theme.Typography
 import com.pepl.designsystem.theme.White
 import com.pepl.greenmate.feature.plant.R
 import com.pepl.model.Plant
-import com.pepl.model.PlantStatus
 import com.pepl.ui.LoadingScreen
 import kotlinx.coroutines.flow.collectLatest
 import kotlin.math.absoluteValue
@@ -179,11 +174,11 @@ fun PlantHeader(
         ) {
             Text(
                 text = "회사 책상 위",
-                style = Typography.titleLarge
+                style = Typography.dovemayoR28
             )
             Text(
                 text = ":안녕 그린메이트, 잘 지내고 있니?",
-                style = Typography.bodyMedium,
+                style = Typography.suitL11,
                 color = Gray
             )
         }
@@ -245,11 +240,7 @@ fun PlantDetailMode(
     val currentPlant = remember { mutableStateOf(0) }
 
     LaunchedEffect(pagerState) {
-        // Collect from the a snapshotFlow reading the currentPage
         snapshotFlow { pagerState.currentPage }.collect { page ->
-            // Do something with each page change, for example:
-            // viewModel.sendPageSelectedEvent(page)
-            Log.d("Page change", "Page changed to $page")
             currentPlant.value = page
         }
     }
@@ -307,8 +298,6 @@ fun PlantGridMode() {
 fun PlantDetails(
     plant: Plant,
 ) {
-
-    Log.d("Page change", "detail changed $plant")
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -319,12 +308,12 @@ fun PlantDetails(
         ) {
             Text(
                 text = plant.name,
-                style = Typography.titleLarge
+                style = Typography.nanumB15
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
                 text = "2시간 전 기준",
-                style = Typography.bodySmall,
+                style = Typography.dovemayoR12,
                 color = Gray
             )
             Spacer(modifier = Modifier.height(34.dp))

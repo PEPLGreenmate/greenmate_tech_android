@@ -129,12 +129,12 @@ private fun ChatHeader(
         ) {
             Text(
                 text = "채팅",
-                style = Typography.titleLarge,
+                style = Typography.dovemayoR18,
                 color = BLACK,
             )
             Text(
                 text = "나의 식물과 오늘 하루를 공유하세요",
-                style = Typography.bodyMedium,
+                style = Typography.suitL11,
                 color = Color.Gray
             )
         }

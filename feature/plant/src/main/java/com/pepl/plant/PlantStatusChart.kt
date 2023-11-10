@@ -39,7 +39,7 @@ fun PlantStatusChart(
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(23.dp, Alignment.CenterHorizontally)
     ) {
-        PlantCharItem(
+        PlantChartItem(
             "토양 수분",
             plant.status.soil.toFloat() / 100,
             Mint,
@@ -48,7 +48,7 @@ fun PlantStatusChart(
             "${plant.status.soil}%",
             "적정"
         )
-        PlantCharItem(
+        PlantChartItem(
             "조도",
             plant.status.light.toFloat() / 100,
             Gold,
@@ -57,7 +57,7 @@ fun PlantStatusChart(
             "${plant.status.light}",
             "적정"
         )
-        PlantCharItem(
+        PlantChartItem(
             "온도",
             plant.status.temp.toFloat() / 100,
             RedPurple,
@@ -66,7 +66,7 @@ fun PlantStatusChart(
             "${plant.status.temp}℃",
             "너무 더워요!"
         )
-        PlantCharItem(
+        PlantChartItem(
             "습도",
             plant.status.humidity.toFloat() / 100,
             Blue,
@@ -79,7 +79,7 @@ fun PlantStatusChart(
 }
 
 @Composable
-fun PlantCharItem(
+fun PlantChartItem(
     title: String,
     progress: Float,
     progressColor: Color,
@@ -93,7 +93,7 @@ fun PlantCharItem(
     ) {
         Text(
             text = title,
-            style = Typography.titleMedium
+            style = Typography.nanumB12
         )
         Spacer(
             modifier = Modifier.height(11.dp)
@@ -118,14 +118,14 @@ fun PlantCharItem(
         )
         Text(
             text = progressText,
-            style = Typography.bodyMedium
+            style = Typography.nanumB12
         )
         Spacer(
             modifier = Modifier.height(19.dp)
         )
         Text(
             text = description,
-            style = Typography.bodyMedium,
+            style = Typography.dovemayoR12,
             color = Gray
         )
     }

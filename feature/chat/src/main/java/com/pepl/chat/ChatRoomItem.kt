@@ -105,12 +105,12 @@ private fun ChatRecent(
             Text(
                 modifier = Modifier.weight(1F),
                 text = chatRoom.plantName,
-                style = Typography.bodyLarge,
+                style = Typography.nanumR13,
                 color = BLACK
             )
             Text(
                 text = chatRoom.lastSendTime,
-                style = Typography.bodySmall,
+                style = Typography.nanumL10,
                 color = DarkBrown
             )
         }
@@ -121,7 +121,7 @@ private fun ChatRecent(
             Text(
                 modifier = Modifier.weight(1F),
                 text = chatRoom.lastMessage,
-                style = Typography.bodyMedium,
+                style = Typography.nanumL10,
                 color = DarkBrown
             )
             if (chatRoom.isRead.not()) {

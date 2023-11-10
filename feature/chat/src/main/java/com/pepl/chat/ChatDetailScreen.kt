@@ -98,7 +98,7 @@ internal fun ChatDetailScreen(
         ) {
             Text(
                 text = "페풀이",
-                style = Typography.titleLarge,
+                style = Typography.dovemayoR17,
             )
         }
         Spacer(

@@ -44,7 +44,7 @@ fun PlantDetailButton(
         Text(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 13.dp),
             text = text,
-            style = Typography.bodyMedium,
+            style = Typography.nanumB11,
             color = White
         )
     }
