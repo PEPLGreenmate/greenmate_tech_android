@@ -1,8 +1,8 @@
 package com.pepl.chat
 
+import android.graphics.Paint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,23 +18,28 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,6 +50,7 @@ import com.pepl.designsystem.component.NetworkImage
 import com.pepl.designsystem.theme.BLACK
 import com.pepl.designsystem.theme.BackgroundGreen
 import com.pepl.designsystem.theme.DarkBrown
+import com.pepl.designsystem.theme.DarkGray
 import com.pepl.designsystem.theme.Gray
 import com.pepl.designsystem.theme.GreenMateTheme
 import com.pepl.designsystem.theme.MainGreen
@@ -85,61 +91,66 @@ internal fun ChatDetailScreen(
     onBackClick: () -> Unit,
     viewModel: ChatDetailViewModel = hiltViewModel(),
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(BackgroundGreen)
+    Box(
+        modifier = Modifier.fillMaxSize()
     ) {
-        Spacer(
-            modifier = Modifier.statusBarsPadding()
-        )
-        ChatHeader(
-            modifier = Modifier.padding(32.dp),
-        )
-        Spacer(
+        Column(
             modifier = Modifier
-                .height(10.dp)
-        )
-        when (chatDetailUiState) {
-            ChatDetailUiState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
+                .fillMaxSize()
+                .background(BackgroundGreen)
+                .statusBarsPadding()
+                .systemBarsPadding()
+        ) {
+            ChatHeader(
+                modifier = Modifier.padding(32.dp),
+            )
+            Spacer(
+                modifier = Modifier
+                    .height(10.dp)
+            )
+            when (chatDetailUiState) {
+                ChatDetailUiState.Loading -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
                 }
-            }
 
-            is ChatDetailUiState.Empty -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(
-                        text = "채팅이 없습니다"
-                    )
+                is ChatDetailUiState.Empty -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = "채팅이 없습니다"
+                        )
+                    }
                 }
-            }
 
-            is ChatDetailUiState.Chat -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(13.dp)
-                ) {
-                    itemsIndexed(chatDetailUiState.chats.toPersistentList()) { index, chat ->
-                        if (chat.isPlantChat) {
-                            PlantChat(
-                                chat = chat,
-                                isLastChat = index == chatDetailUiState.chats.size - 1 || chatDetailUiState.chats[index + 1].isPlantChat.not()
-                            )
-                        } else {
-                            UserChat(
-                                chat = chat,
-                                isLastChat = index == chatDetailUiState.chats.size - 1 || chatDetailUiState.chats[index + 1].isPlantChat
-                            )
+                is ChatDetailUiState.Chat -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(13.dp)
+                    ) {
+                        itemsIndexed(chatDetailUiState.chats.toPersistentList()) { index, chat ->
+                            if (chat.isPlantChat) {
+                                PlantChat(
+                                    chat = chat,
+                                    isLastChat = index == chatDetailUiState.chats.size - 1 || chatDetailUiState.chats[index + 1].isPlantChat.not()
+                                )
+                            } else {
+                                UserChat(
+                                    chat = chat,
+                                    isLastChat = index == chatDetailUiState.chats.size - 1 || chatDetailUiState.chats[index + 1].isPlantChat
+                                )
+                            }
                         }
                     }
                 }
             }
         }
+        ChatSender(
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
-
 }
 
 @Composable
@@ -153,7 +164,6 @@ private fun ChatHeader(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Image(
             painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.left_arrow),
             contentDescription = "뒤로 가기 버튼",
@@ -172,14 +182,71 @@ private fun ChatHeader(
     }
 }
 
+@Composable
+fun ChatSender(
+    modifier: Modifier,
+) {
+    var sendMessage by remember { mutableStateOf("") }
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 30.dp, end = 30.dp, top = 0.dp, bottom = 15.dp)
+    ) {
+        BasicTextField(
+            value = sendMessage,
+            onValueChange = { sendMessage = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(
+                    5.dp,
+                    shape = RoundedCornerShape(24.dp),
+                    spotColor = Color.Transparent
+                )
+                .background(White.copy(alpha = 0.8f), RoundedCornerShape(24.dp)),
+            decorationBox = { innerTextField ->
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp, top = 11.dp, bottom = 11.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                    ) {
+                        innerTextField()
+                        if (sendMessage.isEmpty()) {
+                            Text(
+                                text = "대화를 이곳에 적어주세요.",
+                                color = DarkGray,
+                            )
+                        }
+                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_send),
+                        contentDescription = "채팅 보내기 버튼",
+                        modifier = Modifier
+                            .padding(top = 5.dp)
+                            .clickable { }
+                    )
+
+                }
+            }
+        )
+    }
+
+}
 
 @Composable
-internal fun PlantChat(
+private fun PlantChat(
     chat: Chat,
     isLastChat: Boolean,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 13.dp),
         verticalAlignment = Alignment.Bottom
     ) {
         if (isLastChat) {
@@ -205,13 +272,13 @@ internal fun PlantChat(
         Surface(
             shape = if (isLastChat) {
                 RoundedCornerShape(
-                    topStart = 16.dp,
-                    topEnd = 32.dp,
+                    topStart = 24.dp,
+                    topEnd = 24.dp,
                     bottomStart = 0.dp,
-                    bottomEnd = 32.dp
+                    bottomEnd = 24.dp
                 )
             } else {
-                RoundedCornerShape(32.dp)
+                RoundedCornerShape(24.dp)
             },
             color = White
         ) {
@@ -235,17 +302,17 @@ internal fun PlantChat(
 }
 
 @Composable
-internal fun UserChat(
+private fun UserChat(
     chat: Chat,
     isLastChat: Boolean,
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(bottom = 13.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.Bottom
     ) {
-
         Text(
             text = chat.sendTime,
             style = Typography.bodySmall,
@@ -257,13 +324,13 @@ internal fun UserChat(
         Surface(
             shape = if (isLastChat) {
                 RoundedCornerShape(
-                    topStart = 32.dp,
-                    topEnd = 16.dp,
-                    bottomStart = 32.dp,
+                    topStart = 24.dp,
+                    topEnd = 24.dp,
+                    bottomStart = 24.dp,
                     bottomEnd = 0.dp
                 )
             } else {
-                RoundedCornerShape(32.dp)
+                RoundedCornerShape(24.dp)
             },
             color = MainGreen
         ) {
@@ -278,5 +345,21 @@ internal fun UserChat(
             )
         }
 
+    }
+}
+
+@Preview
+@Composable
+private fun ChatDetailPreview() {
+    GreenMateTheme {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BackgroundGreen)
+        ) {
+            ChatSender(
+                modifier = Modifier.align(Alignment.BottomCenter)
+            )
+        }
     }
 }
