@@ -12,7 +12,11 @@ data class Plant(
 
 data class PlantStatus(
     val soil: Int,
+    val soilState: String,
     val humidity: Int,
+    val humidityState: String,
     val light: Int,
+    val lightState: String,
     val temp: Int,
+    val tempState: String,
 )

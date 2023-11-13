@@ -52,6 +52,7 @@ import com.pepl.designsystem.theme.White
 import com.pepl.greenmate.feature.plant.R
 import com.pepl.model.Plant
 import com.pepl.ui.LoadingScreen
+import com.pepl.util.getDiffHour
 import kotlinx.coroutines.flow.collectLatest
 import kotlin.math.absoluteValue
 
@@ -312,7 +313,7 @@ fun PlantDetails(
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
-                text = "2시간 전 기준",
+                text = "${getDiffHour(plant.lastUpdate)}시간 전 기준",
                 style = Typography.dovemayoR12,
                 color = Gray
             )

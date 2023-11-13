@@ -34,6 +34,7 @@ import com.pepl.model.Plant
 fun PlantStatusChart(
     plant: Plant,
 ) {
+    println("plant $plant")
     Row(
         modifier = Modifier
             .fillMaxWidth(),
@@ -46,25 +47,25 @@ fun PlantStatusChart(
             R.drawable.ic_soilwater,
             "토양 수분 아이콘",
             "${plant.status.soil}%",
-            "적정"
+            plant.status.soilState
         )
         PlantChartItem(
             "조도",
-            plant.status.light.toFloat() / 100,
+            plant.status.light.toFloat() / 66,
             Gold,
             R.drawable.ic_sun,
             "조도 아이콘",
-            "${plant.status.light}",
-            "적정"
+            "${plant.status.light} volt",
+            plant.status.lightState
         )
         PlantChartItem(
             "온도",
-            plant.status.temp.toFloat() / 100,
+            plant.status.temp.toFloat() / 25,
             RedPurple,
             R.drawable.ic_temperature,
             "온도 아이콘",
             "${plant.status.temp}℃",
-            "너무 더워요!"
+            plant.status.tempState
         )
         PlantChartItem(
             "습도",
@@ -73,7 +74,7 @@ fun PlantStatusChart(
             R.drawable.ic_humidity,
             "습도 아이콘",
             "${plant.status.humidity}%",
-            "적정"
+            plant.status.humidityState
         )
     }
 }

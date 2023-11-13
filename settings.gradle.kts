@@ -27,6 +27,7 @@ include(
     ":core:ui",
     ":core:testing",
     ":core:datastore",
+    ":core:util",
 
     ":feature:home",
     ":feature:plant",
@@ -34,5 +35,4 @@ include(
     ":feature:diary",
     ":feature:setting",
 
-)
-include(":core:domain")
+    )
