@@ -6,7 +6,9 @@ sealed interface PlantUiState {
 
     object Loading : PlantUiState
     object Empty : PlantUiState
-    object GardenEmpty : PlantUiState
+    data class GardenEmpty(
+        val gardenId: String,
+    ) : PlantUiState
 
     data class Plants(
         val gardenId: String,

@@ -42,13 +42,16 @@ class PlantViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getLastGardenUseCase().flatMapLatest { lastGardenId ->
-                println("PlantViewModel $lastGardenId ")
                 flow { emit(getPlantsUseCase(lastGardenId)) }
                     .flatMapLatest { plants ->
                         if (lastGardenId.isEmpty()) {
-                            flowOf(PlantUiState.GardenEmpty)
-                        } else if (plants.isEmpty()) {
                             flowOf(PlantUiState.Empty)
+                        } else if (plants.isEmpty()) {
+                            flowOf(
+                                PlantUiState.GardenEmpty(
+                                    gardenId = lastGardenId
+                                )
+                            )
                         } else {
                             flowOf(
                                 PlantUiState.Plants(

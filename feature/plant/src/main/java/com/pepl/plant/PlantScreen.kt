@@ -73,8 +73,8 @@ internal fun PlantRoute(
             LoadingScreen()
         }
 
-        is PlantUiState.GardenEmpty -> {
-            EmptyGardenScreen(
+        is PlantUiState.Empty -> {
+            EmptyScreen(
                 padding = padding,
             )
         }
@@ -94,7 +94,7 @@ internal fun PlantRoute(
 }
 
 @Composable
-private fun EmptyGardenScreen(
+private fun EmptyScreen(
     padding: PaddingValues,
 ) {
     Box(
@@ -123,13 +123,14 @@ private fun PlantScreen(
             .systemBarsPadding()
             .statusBarsPadding()
     ) {
-        PlantHeader(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, top = 25.dp, bottom = 14.dp)
-        )
         when (plantUiState) {
-            is PlantUiState.Empty -> {
+            is PlantUiState.GardenEmpty -> {
+                PlantHeader(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 25.dp, bottom = 14.dp),
+                    gardenId = plantUiState.gardenId
+                )
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -143,6 +144,12 @@ private fun PlantScreen(
             }
 
             is PlantUiState.Plants -> {
+                PlantHeader(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 25.dp, bottom = 14.dp),
+                    gardenId = plantUiState.gardenId
+                )
                 PlantContents(
                     modifier = Modifier
                         .padding(bottom = 59.dp),
@@ -159,6 +166,7 @@ private fun PlantScreen(
 @Composable
 fun PlantHeader(
     modifier: Modifier,
+    gardenId: String,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -173,9 +181,8 @@ fun PlantHeader(
         Column(
             modifier = Modifier.weight(1F)
         ) {
-            Text(
-                text = "회사 책상 위",
-                style = Typography.dovemayoR28
+            MyGarden(
+                gardenId
             )
             Text(
                 text = ":안녕 그린메이트, 잘 지내고 있니?",
@@ -184,13 +191,40 @@ fun PlantHeader(
             )
         }
         AlarmImage(
-            modifier = Modifier.size(width = 18.dp, height = 18.dp),
+            modifier = Modifier
+                .size(width = 18.dp, height = 18.dp)
+                .clickable { },
             isNotReadAlarmExist = true
         )
         Spacer(modifier = Modifier.width(11.dp))
         Image(
             painter = painterResource(id = R.drawable.ic_menu),
-            contentDescription = "추가메뉴"
+            contentDescription = "추가메뉴",
+            modifier = Modifier.clickable { }
+        )
+    }
+}
+
+@Composable
+fun MyGarden(
+    gardenId: String,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = gardenId,
+            style = Typography.dovemayoR28
+        )
+        Spacer(
+            modifier = Modifier.width(12.dp)
+        )
+        Image(
+            painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.ic_down_arrow),
+            contentDescription = "나의 정원 리스트 보기 아이콘",
+            modifier = Modifier.clickable {
+
+            }
         )
     }
 }
