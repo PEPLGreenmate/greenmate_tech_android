@@ -45,6 +45,7 @@ import com.pepl.designsystem.theme.MainGreen
 import com.pepl.designsystem.theme.White
 import com.pepl.diary.navigation.diaryNavGraph
 import com.pepl.plant.navigation.plantNavGraph
+import com.pepl.search.navigation.searchNavGraph
 import com.pepl.setting.navigation.settingNavGraph
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
@@ -76,6 +77,10 @@ internal fun MainScreen(
                     navController = navigator.navController,
                     startDestination = navigator.startDestination
                 ) {
+                    searchNavGraph(
+                        padding = padding,
+                        onShowErrorSnackBar = onShowErrorSnackBar
+                    )
                     chatNavGraph(
                         padding = padding,
                         onBackClick = {},

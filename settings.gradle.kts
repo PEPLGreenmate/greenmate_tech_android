@@ -31,8 +31,10 @@ include(
 
     ":feature:home",
     ":feature:plant",
+    ":feature:search",
     ":feature:chat",
     ":feature:diary",
     ":feature:setting",
 
     )
+include(":search")

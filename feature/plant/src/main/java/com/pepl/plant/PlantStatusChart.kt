@@ -17,12 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pepl.designsystem.theme.Blue
 import com.pepl.designsystem.theme.Gold
 import com.pepl.designsystem.theme.Gray
-import com.pepl.designsystem.theme.GreenMateTheme
 import com.pepl.designsystem.theme.LightGray
 import com.pepl.designsystem.theme.Mint
 import com.pepl.designsystem.theme.RedPurple
