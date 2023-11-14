@@ -159,7 +159,7 @@ private fun ChatHeader(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 10.dp),
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
@@ -170,12 +170,12 @@ private fun ChatHeader(
         Text(
             text = "페풀이",
             style = Typography.dovemayoR17,
-            modifier = Modifier.fillMaxWidth(1F),
             textAlign = TextAlign.Center
         )
         Image(
-            painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.main_character),
+            painterResource(id= com.pepl.greenmate.core.designsystem.R.drawable.ic_menu),
             contentDescription = "추가 옵션 버튼",
+            modifier = Modifier.size(19.dp)
         )
     }
 }
