@@ -1,6 +1,5 @@
 package com.pepl.chat
 
-import android.graphics.Paint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -39,7 +38,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -171,7 +169,7 @@ private fun ChatHeader(
         )
         Text(
             text = "페풀이",
-            style = Typography.titleLarge,
+            style = Typography.dovemayoR17,
             modifier = Modifier.fillMaxWidth(1F),
             textAlign = TextAlign.Center
         )
@@ -284,7 +282,7 @@ private fun PlantChat(
         ) {
             Text(
                 text = chat.message,
-                style = Typography.bodyMedium,
+                style = Typography.nanumR10,
                 modifier = Modifier
                     .padding(horizontal = 20.dp, vertical = 10.dp),
                 color = BLACK
@@ -295,7 +293,7 @@ private fun PlantChat(
         )
         Text(
             text = chat.sendTime,
-            style = Typography.bodySmall,
+            style = Typography.nanumR8,
             color = DarkBrown,
         )
     }
@@ -315,7 +313,7 @@ private fun UserChat(
     ) {
         Text(
             text = chat.sendTime,
-            style = Typography.bodySmall,
+            style = Typography.nanumR8,
             color = DarkBrown,
         )
         Spacer(
@@ -336,7 +334,7 @@ private fun UserChat(
         ) {
             Text(
                 text = chat.message,
-                style = Typography.bodyMedium,
+                style = Typography.nanumR10,
                 modifier = Modifier
                     .padding(
                         horizontal = 20.dp, vertical = 10.dp

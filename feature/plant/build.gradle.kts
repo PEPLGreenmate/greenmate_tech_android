@@ -7,6 +7,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.util)
+
     implementation(libs.kotlinx.immutable)
     implementation(libs.compose.shimmer)
 }

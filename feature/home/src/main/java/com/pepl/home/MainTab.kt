@@ -5,12 +5,18 @@ import com.pepl.plant.navigation.PlantRoute
 import com.pepl.diary.navigation.DiaryRoute
 import com.pepl.setting.navigation.SettingRoute
 import com.pepl.greenmate.feature.home.R
+import com.pepl.search.navigation.SearchRoute
 
 internal enum class MainTab(
     val iconResId: Int,
     internal val contentDescription: String,
     val route: String,
 ) {
+    SEARCH(
+        iconResId = R.drawable.ic_search,
+        contentDescription = "도감",
+        SearchRoute.route
+    ),
     CHAT(
         iconResId = R.drawable.ic_chat,
         contentDescription = "채팅",

@@ -13,6 +13,7 @@ import com.pepl.chat.navigation.navigateChatDetail
 import com.pepl.diary.navigation.navigateDiary
 import com.pepl.plant.navigation.PlantRoute
 import com.pepl.plant.navigation.navigatePlant
+import com.pepl.search.navigation.navigateSearch
 import com.pepl.setting.navigation.navigateSetting
 
 internal class MainNavigator(
@@ -38,6 +39,7 @@ internal class MainNavigator(
         }
 
         when (tab) {
+            MainTab.SEARCH -> navController.navigateSearch(navOptions)
             MainTab.CHAT -> navController.navigateChat(navOptions)
             MainTab.PLANT -> navController.navigatePlant(navOptions)
             MainTab.DIARY -> navController.navigateDiary(navOptions)
