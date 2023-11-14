@@ -9,17 +9,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -80,6 +85,11 @@ internal fun ChatDetailScreen(
             .fillMaxSize()
             .background(BackgroundGreen)
     ) {
+        Spacer(
+            modifier = Modifier
+                .windowInsetsTopHeight(WindowInsets.statusBars)
+                .fillMaxWidth()
+        )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -88,7 +98,7 @@ internal fun ChatDetailScreen(
         ) {
             Text(
                 text = "페풀이",
-                style = Typography.titleLarge,
+                style = Typography.dovemayoR17,
             )
         }
         Spacer(
@@ -128,6 +138,7 @@ internal fun ChatDetailScreen(
             }
         }
     }
+
 
 }
 

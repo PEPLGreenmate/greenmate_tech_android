@@ -3,6 +3,7 @@ package com.pepl.diary
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pepl.domain.usecase.GetChatRoomsUseCase
+import com.pepl.domain.usecase.GetChatsUseCase
 import com.pepl.domain.usecase.GetPlantsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiaryViewModel @Inject constructor(
-    getDiariesUseCase: GetPlantsUseCase,
+    getDiariesUseCase: GetChatsUseCase,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()

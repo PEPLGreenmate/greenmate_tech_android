@@ -4,12 +4,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.pepl.chat.ChatDetailRoute
 import com.pepl.chat.ChatRoute
-import com.pepl.chat.navigation.ChatRoute
 import com.pepl.model.ChatRoom
 
 fun NavController.navigateChat(navOptions: NavOptions) {

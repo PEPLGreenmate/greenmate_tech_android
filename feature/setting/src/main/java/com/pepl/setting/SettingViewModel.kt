@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingViewModel @Inject constructor(
-    getSettingsUseCase: GetPlantsUseCase,
+    getSettingsUseCase: GetChatRoomsUseCase,
 ) : ViewModel() {
 
     private val _errorFlow = MutableSharedFlow<Throwable>()
