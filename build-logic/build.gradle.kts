@@ -20,4 +20,5 @@ gradlePlugin {
             implementationClass = "com.pepl.greenmate.HiltKotlinPlugin"
         }
     }
+
 }

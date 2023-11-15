@@ -49,6 +49,9 @@ val Typography = GreenMateTypography(
     dovemayoR12 = dovemayoStyle.copy(
         fontSize = 12.sp,
     ),
+    dovemayoR14 = dovemayoStyle.copy(
+        fontSize = 14.sp,
+    ),
     dovemayoR17 = dovemayoStyle.copy(
         fontSize = 17.sp,
     ),
@@ -58,8 +61,17 @@ val Typography = GreenMateTypography(
     dovemayoR19 = dovemayoStyle.copy(
         fontSize = 19.sp,
     ),
+    dovemayoR26 = dovemayoStyle.copy(
+        fontSize = 26.sp,
+    ),
     dovemayoR28 = dovemayoStyle.copy(
         fontSize = 28.sp,
+    ),
+    dovemayoR36 = dovemayoStyle.copy(
+        fontSize = 36.sp,
+    ),
+    dovemayoR40 = dovemayoStyle.copy(
+        fontSize = 40.sp,
     ),
     nanumL10 = nanumStyle.copy(
         fontSize = 10.sp,
@@ -96,16 +108,24 @@ val Typography = GreenMateTypography(
     pretendardM12 = pretendardStyle.copy(
         fontSize = 12.sp,
         fontWeight = FontWeight.Medium
+    ),
+    pretendardM25 = pretendardStyle.copy(
+        fontSize = 25.sp,
+        fontWeight = FontWeight.Medium
     )
 )
 
 @Immutable
 data class GreenMateTypography(
     val dovemayoR12: TextStyle,
+    val dovemayoR14: TextStyle,
     val dovemayoR17: TextStyle,
     val dovemayoR18: TextStyle,
     val dovemayoR19: TextStyle,
+    val dovemayoR26: TextStyle,
     val dovemayoR28: TextStyle,
+    val dovemayoR36: TextStyle,
+    val dovemayoR40: TextStyle,
     val nanumL10: TextStyle,
     val nanumR8: TextStyle,
     val nanumR10: TextStyle,
@@ -115,6 +135,7 @@ data class GreenMateTypography(
     val nanumB15: TextStyle,
     val suitL11: TextStyle,
     val pretendardM12: TextStyle,
+    val pretendardM25: TextStyle,
 )
 
 val LocalTypography = staticCompositionLocalOf { Typography }

@@ -197,7 +197,7 @@ fun PlantHeader(
         )
         Spacer(modifier = Modifier.width(11.dp))
         Image(
-            painter = painterResource(id = R.drawable.ic_menu),
+            painter = painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.ic_menu),
             contentDescription = "추가메뉴",
             modifier = Modifier.clickable { }
         )
