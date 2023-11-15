@@ -166,7 +166,7 @@ private fun DiaryScreen() {
             ) {
                 Box( //이미지 박스
                     modifier = Modifier
-                        .padding(top = 480.dp, start = 15.dp)
+                        .padding(top = 380.dp, start = 15.dp)
                         .width(116.36361.dp)
                         .height(169.42961.dp)
                         .rotate(-4F)
