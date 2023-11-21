@@ -110,9 +110,11 @@ private fun DiaryScreen() {
         Image(
             painter = painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.main_logo),
             contentDescription = null,
+
             modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .fillMaxHeight(0.3f)
                 .padding(
-                    top = 560.dp,
                     start = 310.dp
                 )
                 .size(
@@ -122,7 +124,6 @@ private fun DiaryScreen() {
                 .graphicsLayer(
                     scaleX = -1f // Set scaleX to -1 for horizontal flip
                 )
-                .align(Alignment.TopStart)
                 .zIndex(1f)
 
         )
@@ -136,7 +137,7 @@ private fun DiaryScreen() {
 
             Column( //헤더
                 modifier = Modifier
-                    .padding(top = 55.dp, bottom = 5.dp),
+                    .padding(top = 50.dp, bottom = 5.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -172,10 +173,11 @@ private fun DiaryScreen() {
                         spotColor = Color(0x40000000),
                         ambientColor = Color(0x40000000)
                     )
-                    .width(330.dp)
-                    .height(500.185.dp)
-                    .verticalScroll(scrollState)
+                    //.width(330.dp)
+                    .fillMaxWidth(0.85f)
+                    .fillMaxHeight(0.85f)
                     .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 20.dp))
+                    .verticalScroll(scrollState)
             ) {
                 Box( //이미지 박스
                     modifier= Modifier
@@ -256,13 +258,13 @@ private fun DiaryScreen() {
 점심 때는 동료들이랑 식사하면서 웃음 가득한 대화 나눴어. 직장 생활이 친구랑 놀러오는 것 같아.
 오후에는 업무 끝내고 집에 오는 길에 행운목 아래서 쉬었어. 자연과 나의 작은 나무 덕분에 마음이 편안해져.
 
-                              집 와서 행운목에 물 주고 잎들
-                              닦아줬어. 이 나무랑 함께하는 건              
-                               정말 행운 같아서 감사해.
+                             집 와서 행운목에 물 주고 잎들
+                             닦아줬어. 이 나무랑 함께하는 건              
+                              정말 행운 같아서 감사해.
 
-                                오늘은 행운목과 함께한 날로 
-                                정말 기분 좋아. 내일도 더 열심
-                                 히 일하자!
+                               오늘은 행운목과 함께한 날로 
+                               정말 기분 좋아. 내일도 더 열심
+                                히 일하자!
 """,
                         style = TextStyle(
                             fontSize = 14.sp,
