@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,16 +33,13 @@ import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.pepl.designsystem.theme.mayo
+import com.pepl.designsystem.theme.Typography
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -55,7 +52,7 @@ private object SpacerMeasurePolicy : MeasurePolicy {
 
     override fun MeasureScope.measure(
         measurables: List<Measurable>,
-        constraints: Constraints
+        constraints: Constraints,
     ): MeasureResult {
         return with(constraints) {
             val width = if (hasFixedWidth) maxWidth else 0
@@ -106,7 +103,7 @@ private fun DiaryScreen() {
                 )
                 .align(Alignment.TopStart)
 
-            )
+        )
         Image(
             painter = painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.main_logo),
             contentDescription = null,
@@ -142,11 +139,7 @@ private fun DiaryScreen() {
             ) {
                 Text(
                     text = "기분이 좋은",
-                    style = TextStyle(
-                        fontSize = 12.sp,
-                        lineHeight = 12.sp,
-                        //fontFamily = FontFamily(Font(R.font.pretendard)),
-                        fontWeight = FontWeight(500),
+                    style = Typography.pretendardM12.copy(
                         color = Color(0xFF94959D),
                     )
                 )
@@ -156,14 +149,8 @@ private fun DiaryScreen() {
                         .width(100.dp)
                         .padding(bottom = 10.dp),
                     text = "23년 9월 30일 토요일 ",
-                    style = TextStyle(
-                        fontSize = 17.37.sp,
-                        lineHeight = 17.37.sp,
-                        fontFamily = mayo,
-                        fontWeight = FontWeight(400),
-                        color = Color(0xFF000000),
-                        textAlign = TextAlign.Center,
-                    )
+                    style = Typography.dovemayoR18,
+                    textAlign = TextAlign.Center
                 )
             }
             Box( //바디(박스)
@@ -180,8 +167,8 @@ private fun DiaryScreen() {
                     .verticalScroll(scrollState)
             ) {
                 Box( //이미지 박스
-                    modifier= Modifier
-                        .padding(top = 480.dp, start = 15.dp)
+                    modifier = Modifier
+                        .padding(top = 380.dp, start = 15.dp)
                         .width(116.36361.dp)
                         .height(169.42961.dp)
                         .rotate(-4F)
@@ -200,7 +187,6 @@ private fun DiaryScreen() {
                                 top = 6.5.dp,
                                 start = 7.dp
                             )
-
                     )
                     {
                         Image(
@@ -224,16 +210,11 @@ private fun DiaryScreen() {
                                 top = 13.dp
                             ),
                         text = "행운목 입양한 날!",
-                        style = TextStyle(
-                            fontSize = 19.3.sp,
-                            lineHeight = 19.3.sp,
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF414147),
-                            fontFamily = mayo,
-                            textAlign = TextAlign.Center,
-                        )
+                        style = Typography.dovemayoR19,
+                        textAlign = TextAlign.Center
                     )
-                    Box( //회색선
+                    Box(
+                        //회색선
                         modifier = Modifier
                             .padding(start = 45.dp)
                             .height(0.96515.dp)
@@ -241,7 +222,7 @@ private fun DiaryScreen() {
                             .background(
                                 color = Color(0xFFD1D2D9),
                                 shape = RoundedCornerShape(size = 14.dp)
-                            ) ,
+                            ),
                         contentAlignment = Alignment.Center,
                     )
                     {
@@ -266,15 +247,7 @@ private fun DiaryScreen() {
                                정말 기분 좋아. 내일도 더 열심
                                 히 일하자!
 """,
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            lineHeight = 22.sp,
-                            letterSpacing = 0.3.sp,
-                            fontFamily = mayo,
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF6D6D6D),
-
-                            )
+                        style = Typography.dovemayoR14
                     )
                 }
 
@@ -282,8 +255,4 @@ private fun DiaryScreen() {
 
         }
     }
-
-
-
-
 }

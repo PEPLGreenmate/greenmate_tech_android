@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,6 +47,7 @@ import com.pepl.designsystem.theme.MainGreen
 import com.pepl.designsystem.theme.White
 import com.pepl.diary.navigation.diaryNavGraph
 import com.pepl.plant.navigation.plantNavGraph
+import com.pepl.search.navigation.searchNavGraph
 import com.pepl.setting.navigation.settingNavGraph
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
@@ -70,12 +73,16 @@ internal fun MainScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(White)
+                    .background(White),
             ) {
                 NavHost(
                     navController = navigator.navController,
                     startDestination = navigator.startDestination
                 ) {
+                    searchNavGraph(
+                        padding = padding,
+                        onShowErrorSnackBar = onShowErrorSnackBar
+                    )
                     chatNavGraph(
                         padding = padding,
                         onBackClick = {},

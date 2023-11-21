@@ -15,4 +15,5 @@ dependencies {
     implementation(libs.landscapist.placeholder)
 
     implementation(libs.androidx.glance)
+
 }

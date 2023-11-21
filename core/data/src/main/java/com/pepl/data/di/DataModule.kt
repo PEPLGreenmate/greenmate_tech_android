@@ -2,9 +2,13 @@ package com.pepl.data.di
 
 import com.pepl.data.repository.ChatRepository
 import com.pepl.data.repository.DefaultChatRepository
+import com.pepl.data.repository.DefaultGardenRepository
 import com.pepl.data.repository.DefaultPlantRepository
+import com.pepl.data.repository.GardenRepository
 import com.pepl.data.repository.PlantRepository
+import com.pepl.datastore.datasource.DefaultGardenDataSource
 import com.pepl.datastore.datasource.DefaultPlantDataSource
+import com.pepl.datastore.datasource.GardenDataSource
 import com.pepl.datastore.datasource.PlantDataSource
 import dagger.Binds
 import dagger.Module
@@ -26,8 +30,18 @@ internal abstract class DataModule {
     ): PlantRepository
 
     @Binds
+    abstract fun bindsGardenRepository(
+        repository: DefaultGardenRepository,
+    ): GardenRepository
+
+    @Binds
     abstract fun bindsPlantDataSource(
         dataSource: DefaultPlantDataSource,
     ): PlantDataSource
+
+    @Binds
+    abstract fun bindsGardenDataSource(
+        dataSource: DefaultGardenDataSource,
+    ): GardenDataSource
 
 }

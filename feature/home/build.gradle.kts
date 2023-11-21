@@ -7,6 +7,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.feature.search)
     implementation(projects.feature.chat)
     implementation(projects.feature.plant)
     implementation(projects.feature.diary)

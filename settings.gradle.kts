@@ -27,12 +27,14 @@ include(
     ":core:ui",
     ":core:testing",
     ":core:datastore",
+    ":core:util",
 
     ":feature:home",
     ":feature:plant",
+    ":feature:search",
     ":feature:chat",
     ":feature:diary",
     ":feature:setting",
 
-)
-include(":core:domain")
+    )
+include(":search")
