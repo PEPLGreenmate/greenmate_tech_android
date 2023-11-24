@@ -47,70 +47,70 @@ private val pretendardStyle = TextStyle(
 
 val Typography = GreenMateTypography(
     dovemayoR12 = dovemayoStyle.copy(
-        fontSize = 12.sp,
-    ),
-    dovemayoR14 = dovemayoStyle.copy(
         fontSize = 14.sp,
     ),
+    dovemayoR14 = dovemayoStyle.copy(
+        fontSize = 16.sp,
+    ),
     dovemayoR17 = dovemayoStyle.copy(
-        fontSize = 17.sp,
-    ),
-    dovemayoR18 = dovemayoStyle.copy(
-        fontSize = 18.sp,
-    ),
-    dovemayoR19 = dovemayoStyle.copy(
         fontSize = 19.sp,
     ),
-    dovemayoR26 = dovemayoStyle.copy(
-        fontSize = 26.sp,
+    dovemayoR18 = dovemayoStyle.copy(
+        fontSize = 20.sp,
     ),
-    dovemayoR28 = dovemayoStyle.copy(
+    dovemayoR19 = dovemayoStyle.copy(
+        fontSize = 21.sp,
+    ),
+    dovemayoR26 = dovemayoStyle.copy(
         fontSize = 28.sp,
     ),
+    dovemayoR28 = dovemayoStyle.copy(
+        fontSize = 30.sp,
+    ),
     dovemayoR36 = dovemayoStyle.copy(
-        fontSize = 36.sp,
+        fontSize = 38.sp,
     ),
     dovemayoR40 = dovemayoStyle.copy(
-        fontSize = 40.sp,
+        fontSize = 42.sp,
     ),
     nanumL10 = nanumStyle.copy(
-        fontSize = 10.sp,
+        fontSize = 12.sp,
         fontWeight = FontWeight.Light
     ),
     nanumR8 = nanumStyle.copy(
-        fontSize = 8.sp,
-        fontWeight = FontWeight.Normal
-    ),
-    nanumR10 = nanumStyle.copy(
         fontSize = 10.sp,
         fontWeight = FontWeight.Normal
     ),
+    nanumR10 = nanumStyle.copy(
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Normal
+    ),
     nanumR13 = nanumStyle.copy(
-        fontSize = 13.sp,
+        fontSize = 15.sp,
         fontWeight = FontWeight.Normal
     ),
     nanumB11 = nanumStyle.copy(
-        fontSize = 11.sp,
+        fontSize = 13.sp,
         fontWeight = FontWeight.Bold
     ),
     nanumB12 = nanumStyle.copy(
-        fontSize = 12.sp,
+        fontSize = 14.sp,
         fontWeight = FontWeight.Bold
     ),
     nanumB15 = nanumStyle.copy(
-        fontSize = 15.sp,
+        fontSize = 17.sp,
         fontWeight = FontWeight.Bold
     ),
     suitL11 = suitStyle.copy(
-        fontSize = 11.sp,
+        fontSize = 13.sp,
         fontWeight = FontWeight.Light
     ),
     pretendardM12 = pretendardStyle.copy(
-        fontSize = 12.sp,
+        fontSize = 14.sp,
         fontWeight = FontWeight.Medium
     ),
     pretendardM25 = pretendardStyle.copy(
-        fontSize = 25.sp,
+        fontSize = 27.sp,
         fontWeight = FontWeight.Medium
     )
 )
