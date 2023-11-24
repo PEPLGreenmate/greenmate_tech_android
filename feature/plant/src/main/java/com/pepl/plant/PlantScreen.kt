@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -59,6 +60,7 @@ import kotlin.math.absoluteValue
 internal fun PlantRoute(
     padding: PaddingValues,
     onShowErrorSnackBar: (throwable: Throwable?) -> Unit,
+    onDetailButtonClick: (String) -> Unit,
     viewModel: PlantViewModel = hiltViewModel(),
 ) {
     val plantUiState by viewModel.plantUiState.collectAsStateWithLifecycle()
@@ -84,7 +86,8 @@ internal fun PlantRoute(
                 plantUiState = plantUiState,
                 onGridModeClick = {
                     //viewModel.clickGridModeButton()
-                }
+                },
+                onDetailButtonClick = onDetailButtonClick
             )
         }
 
@@ -113,6 +116,7 @@ private fun PlantScreen(
     padding: PaddingValues,
     plantUiState: PlantUiState,
     onGridModeClick: () -> Unit,
+    onDetailButtonClick: (String) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -153,7 +157,8 @@ private fun PlantScreen(
                     modifier = Modifier
                         .padding(bottom = 59.dp),
                     plants = plantUiState,
-                    onGridModeClick = onGridModeClick
+                    onGridModeClick = onGridModeClick,
+                    onDetailButtonClick = onDetailButtonClick
                 )
             }
 
@@ -233,6 +238,7 @@ fun PlantContents(
     modifier: Modifier,
     plants: PlantUiState.Plants,
     onGridModeClick: () -> Unit,
+    onDetailButtonClick: (String) -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -256,7 +262,10 @@ fun PlantContents(
             if (plants.isGridMode) {
                 PlantGridMode()
             } else {
-                PlantDetailMode(plants.plants)
+                PlantDetailMode(
+                    plants.plants,
+                    onDetailButtonClick
+                )
             }
 
         }
@@ -267,6 +276,7 @@ fun PlantContents(
 @Composable
 fun PlantDetailMode(
     plants: List<Plant>,
+    onDetailButtonClick: (String) -> Unit,
 ) {
     val pagerState = rememberPagerState()
     val contentPadding = (LocalConfiguration.current.screenWidthDp.dp - 168.dp) / 2
@@ -316,9 +326,9 @@ fun PlantDetailMode(
         }
         Spacer(modifier = Modifier.height(19.dp))
         PlantDetails(
-            plant = plants[currentPlant.value]
+            plant = plants[currentPlant.value],
+            onDetailButtonClick = onDetailButtonClick
         )
-
     }
 
 }
@@ -331,6 +341,7 @@ fun PlantGridMode() {
 @Composable
 fun PlantDetails(
     plant: Plant,
+    onDetailButtonClick: (String) -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -367,7 +378,9 @@ fun PlantDetails(
             )
             PlantDetailButton(
                 "자세히 보기",
-                onClick = {}
+                onClick = {
+                    onDetailButtonClick(plant.plantId)
+                }
             )
             PlantDetailButton(
                 "상태 체크하기",

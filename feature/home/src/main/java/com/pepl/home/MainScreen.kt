@@ -91,6 +91,10 @@ internal fun MainScreen(
                     )
                     plantNavGraph(
                         padding = padding,
+                        onDetailButtonClick = {
+                            navigator.navigatePlantDetail(it)
+                        },
+                        onBackClick = {},
                         onShowErrorSnackBar = onShowErrorSnackBar
                     )
                     diaryNavGraph(
