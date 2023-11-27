@@ -101,9 +101,21 @@ val Typography = GreenMateTypography(
         fontSize = 17.sp,
         fontWeight = FontWeight.Bold
     ),
+    nanumB24 = nanumStyle.copy(
+        fontSize = 26.sp,
+        fontWeight = FontWeight.Bold
+    ),
     suitL11 = suitStyle.copy(
         fontSize = 13.sp,
         fontWeight = FontWeight.Light
+    ),
+    suitL15 = suitStyle.copy(
+        fontSize = 17.sp,
+        fontWeight = FontWeight.Light
+    ),
+    suitB15 = suitStyle.copy(
+        fontSize = 17.sp,
+        fontWeight = FontWeight.Bold
     ),
     pretendardM12 = pretendardStyle.copy(
         fontSize = 14.sp,
@@ -133,7 +145,10 @@ data class GreenMateTypography(
     val nanumB11: TextStyle,
     val nanumB12: TextStyle,
     val nanumB15: TextStyle,
+    val nanumB24: TextStyle,
     val suitL11: TextStyle,
+    val suitL15: TextStyle,
+    val suitB15: TextStyle,
     val pretendardM12: TextStyle,
     val pretendardM25: TextStyle,
 )
