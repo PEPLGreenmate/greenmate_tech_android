@@ -9,4 +9,6 @@ interface ChatRepository {
 
     suspend fun getChats(roomId: String): List<Chat>
 
+    suspend fun send(chat: Chat): List<Chat>
+
 }

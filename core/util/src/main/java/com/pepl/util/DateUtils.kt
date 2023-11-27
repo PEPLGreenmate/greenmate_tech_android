@@ -5,11 +5,16 @@ import java.util.Date
 import java.util.Locale
 
 private const val dateFormat = "yyyy-MM-dd HH:mm:ss"
+private const val chatDateFormat = "HH:mm"
 private val simpleDateFormat = SimpleDateFormat(dateFormat, Locale.KOREA)
+private val simpleChatDateFormat = SimpleDateFormat(chatDateFormat, Locale.KOREA)
 
 fun String.toLongTime(): Long = simpleDateFormat.parse(this).time
 
 fun Long.toString(): String = simpleDateFormat.format(this)
+
+fun Long.toChatDateString(): String = simpleChatDateFormat.format(this)
+
 fun getDiffHour(last: Long): Int {
     val current = getCurrentLongTime()
 

@@ -4,8 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pepl.domain.usecase.GetChatRoomsUseCase
 import com.pepl.domain.usecase.GetChatsUseCase
+import com.pepl.domain.usecase.SendChatUseCase
+import com.pepl.model.Chat
+import com.pepl.util.getCurrentLongTime
+import com.pepl.util.toChatDateString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -13,15 +18,19 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ChatDetailViewModel @Inject constructor(
-    getChatsUseCase: GetChatsUseCase,
+    private val getChatsUseCase: GetChatsUseCase,
+    private val sendChatUseCase: SendChatUseCase,
 ) : ViewModel() {
     private val _errorFlow = MutableSharedFlow<Throwable>()
     val errorFlow: SharedFlow<Throwable> get() = _errorFlow
 
+    private val _chatDetailUiState =
+        MutableStateFlow<ChatDetailUiState>(ChatDetailUiState.Loading)
     val chatDetailUiState: StateFlow<ChatDetailUiState> = flow { emit(getChatsUseCase()) }
         .map { chats ->
             if (chats.isNotEmpty()) {
@@ -38,4 +47,22 @@ class ChatDetailViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = ChatDetailUiState.Loading,
         )
+
+
+    fun sendChat(message: String) {
+        viewModelScope.launch {
+            val chats = sendChatUseCase(
+                Chat(
+                    false,
+                    "",
+                    "user",
+                    getCurrentLongTime().toChatDateString(),
+                    message
+                )
+            )
+            _chatDetailUiState.value = ChatDetailUiState.Chat(
+                chats
+            )
+        }
+    }
 }
