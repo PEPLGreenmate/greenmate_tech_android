@@ -31,23 +31,15 @@ class ChatDetailViewModel @Inject constructor(
 
     private val _chatDetailUiState =
         MutableStateFlow<ChatDetailUiState>(ChatDetailUiState.Loading)
-    val chatDetailUiState: StateFlow<ChatDetailUiState> = flow { emit(getChatsUseCase()) }
-        .map { chats ->
-            if (chats.isNotEmpty()) {
-                ChatDetailUiState.Chat(chats)
-            } else {
-                ChatDetailUiState.Empty
-            }
-        }
-        .catch { throwable ->
-            _errorFlow.emit(throwable)
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = ChatDetailUiState.Loading,
-        )
+    val chatDetailUiState: StateFlow<ChatDetailUiState> = _chatDetailUiState
 
+    init {
+        viewModelScope.launch {
+            val chats = getChatsUseCase()
+
+            _chatDetailUiState.value = ChatDetailUiState.Chat(chats)
+        }
+    }
 
     fun sendChat(message: String) {
         viewModelScope.launch {
@@ -60,8 +52,13 @@ class ChatDetailViewModel @Inject constructor(
                     message
                 )
             )
+            val oldChats = if (_chatDetailUiState.value is ChatDetailUiState.Chat) {
+                (_chatDetailUiState.value as ChatDetailUiState.Chat).chats
+            } else {
+                emptyList()
+            }
             _chatDetailUiState.value = ChatDetailUiState.Chat(
-                chats
+                oldChats + chats
             )
         }
     }

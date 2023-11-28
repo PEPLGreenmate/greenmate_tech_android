@@ -85,7 +85,7 @@ internal fun MainScreen(
                     )
                     chatNavGraph(
                         padding = padding,
-                        onBackClick = {},
+                        onBackClick = { navigator.popBackStack() },
                         onChatRoomClick = { navigator.navigateChatDetail(it.roomId) },
                         onShowErrorSnackBar = onShowErrorSnackBar
                     )
