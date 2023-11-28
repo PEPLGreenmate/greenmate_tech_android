@@ -105,6 +105,7 @@ internal fun ChatDetailScreen(
         ) {
             ChatHeader(
                 modifier = Modifier.padding(32.dp),
+                onBackClick = onBackClick
             )
             Spacer(
                 modifier = Modifier
@@ -159,6 +160,7 @@ internal fun ChatDetailScreen(
 @Composable
 private fun ChatHeader(
     modifier: Modifier,
+    onBackClick: () -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -170,7 +172,11 @@ private fun ChatHeader(
         Image(
             painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.left_arrow),
             contentDescription = "뒤로 가기 버튼",
-            modifier = Modifier.size(13.dp)
+            modifier = Modifier
+                .size(13.dp)
+                .clickable {
+                    onBackClick()
+                }
         )
         Text(
             text = "페풀이",
@@ -234,6 +240,7 @@ fun ChatSender(
                             .padding(top = 5.dp)
                             .clickable {
                                 onSendClick(sendMessage)
+                                sendMessage = ""
                             }
                     )
 
