@@ -13,6 +13,7 @@ import com.pepl.chat.navigation.navigateChatDetail
 import com.pepl.diary.navigation.navigateDiary
 import com.pepl.plant.navigation.PlantRoute
 import com.pepl.plant.navigation.navigatePlant
+import com.pepl.plant.navigation.navigatePlantDetail
 import com.pepl.search.navigation.navigateSearch
 import com.pepl.setting.navigation.navigateSetting
 
@@ -49,6 +50,10 @@ internal class MainNavigator(
 
     fun navigateChatDetail(roomId: String) {
         navController.navigateChatDetail(roomId)
+    }
+
+    fun navigatePlantDetail(plantId: String) {
+        navController.navigatePlantDetail(plantId)
     }
 
     fun popBackStack() {
