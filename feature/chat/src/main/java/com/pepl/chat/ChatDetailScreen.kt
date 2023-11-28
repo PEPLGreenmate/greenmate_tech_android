@@ -77,7 +77,10 @@ internal fun ChatDetailRoute(
         padding = padding,
         chatDetailUiState = chatDetailUiState,
         chatRoomId = chatRoomId,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onSendClick = {
+            viewModel.sendChat(it)
+        }
     )
 }
 
@@ -87,6 +90,7 @@ internal fun ChatDetailScreen(
     chatDetailUiState: ChatDetailUiState,
     chatRoomId: String,
     onBackClick: () -> Unit,
+    onSendClick: (String) -> Unit,
     viewModel: ChatDetailViewModel = hiltViewModel(),
 ) {
     Box(
@@ -146,7 +150,8 @@ internal fun ChatDetailScreen(
             }
         }
         ChatSender(
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter),
+            onSendClick = onSendClick
         )
     }
 }
@@ -173,7 +178,7 @@ private fun ChatHeader(
             textAlign = TextAlign.Center
         )
         Image(
-            painterResource(id= com.pepl.greenmate.core.designsystem.R.drawable.ic_menu),
+            painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.ic_menu),
             contentDescription = "추가 옵션 버튼",
             modifier = Modifier.size(19.dp)
         )
@@ -183,6 +188,7 @@ private fun ChatHeader(
 @Composable
 fun ChatSender(
     modifier: Modifier,
+    onSendClick: (String) -> Unit,
 ) {
     var sendMessage by remember { mutableStateOf("") }
 
@@ -226,7 +232,9 @@ fun ChatSender(
                         contentDescription = "채팅 보내기 버튼",
                         modifier = Modifier
                             .padding(top = 5.dp)
-                            .clickable { }
+                            .clickable {
+                                onSendClick(sendMessage)
+                            }
                     )
 
                 }
@@ -356,7 +364,10 @@ private fun ChatDetailPreview() {
                 .background(BackgroundGreen)
         ) {
             ChatSender(
-                modifier = Modifier.align(Alignment.BottomCenter)
+                modifier = Modifier.align(Alignment.BottomCenter),
+                onSendClick = {
+
+                }
             )
         }
     }

@@ -1,6 +1,7 @@
 package com.pepl.model
 
 data class Plant(
+    val plantId: String,
     val name: String,
     val imageUrl: String,
     val gardenId: String,
