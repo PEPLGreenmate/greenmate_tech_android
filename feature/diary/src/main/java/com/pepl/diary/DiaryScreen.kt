@@ -33,9 +33,12 @@ import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.layout.MeasureResult
 import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -168,7 +171,7 @@ private fun DiaryScreen() {
             ) {
                 Box( //이미지 박스
                     modifier = Modifier
-                        .padding(top = 380.dp, start = 15.dp)
+                        .padding(top = 510.dp, start = 15.dp)
                         .width(116.36361.dp)
                         .height(169.42961.dp)
                         .rotate(-4F)
@@ -239,15 +242,25 @@ private fun DiaryScreen() {
 점심 때는 동료들이랑 식사하면서 웃음 가득한 대화 나눴어. 직장 생활이 친구랑 놀러오는 것 같아.
 오후에는 업무 끝내고 집에 오는 길에 행운목 아래서 쉬었어. 자연과 나의 작은 나무 덕분에 마음이 편안해져.
 
-                             집 와서 행운목에 물 주고 잎들
-                             닦아줬어. 이 나무랑 함께하는 건              
-                              정말 행운 같아서 감사해.
+                       집 와서 행운목에 물 주고 잎들
+                       닦아줬어. 이 나무랑 함께하는 건              
+                        정말 행운 같아서 감사해.
 
-                               오늘은 행운목과 함께한 날로 
-                               정말 기분 좋아. 내일도 더 열심
-                                히 일하자!
+                         오늘은 행운목과 함께한 날로 
+                         정말 기분 좋아. 내일도 더 열심
+                          히 일하자!
 """,
-                        style = Typography.dovemayoR14
+                        style = Typography.dovemayoR16.copy(
+                            lineHeight = 22.sp,
+                            letterSpacing = 0.3.sp,
+                            fontWeight = FontWeight(400)
+                        )
+//                            TextStyle(
+//                                fontSize = 14.sp,
+//                                lineHeight = 22.sp,
+//                                letterSpacing = 0.3.sp,
+//                                fontWeight = FontWeight(400)
+//                            )
                     )
                 }
 

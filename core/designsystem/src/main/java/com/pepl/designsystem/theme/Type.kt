@@ -52,6 +52,9 @@ val Typography = GreenMateTypography(
     dovemayoR14 = dovemayoStyle.copy(
         fontSize = 14.sp,
     ),
+    dovemayoR16 = dovemayoStyle.copy(
+        fontSize = 16.sp,
+    ),
     dovemayoR17 = dovemayoStyle.copy(
         fontSize = 17.sp,
     ),
@@ -136,6 +139,7 @@ data class GreenMateTypography(
     val suitL11: TextStyle,
     val pretendardM12: TextStyle,
     val pretendardM25: TextStyle,
+    val dovemayoR16: TextStyle,
 )
 
 val LocalTypography = staticCompositionLocalOf { Typography }
