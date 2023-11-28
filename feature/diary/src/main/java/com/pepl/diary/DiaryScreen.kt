@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -41,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.round
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -155,7 +158,7 @@ private fun DiaryScreen() {
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
                     modifier = Modifier
-                        .width(100.dp)
+                        .width(110.dp)
                         .padding(bottom = 10.dp),
                     text = "23년 9월 30일 토요일 ",
                     style = Typography.dovemayoR18,
@@ -175,36 +178,36 @@ private fun DiaryScreen() {
                     .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 20.dp))
                     .verticalScroll(scrollState)
             ) {
-                Box( //이미지 박스
-                    modifier = Modifier
-                        .padding(top = 510.dp, start = 15.dp)
-                        .width(116.36361.dp)
-                        .height(169.42961.dp)
-                        .rotate(-4F)
-                        .background(
-                            color = Color(0x61BDC8C3),
-                            shape = RoundedCornerShape(size = 7.23861.dp)
-                        )
-                )
-                {
-                    Box(
-                        modifier = Modifier
-                            .width(108.08009.dp)
-                            .height(135.87109.dp)
-                            //.rotate(-1F)
-                            .padding(
-                                top = 6.5.dp,
-                                start = 7.dp
-                            )
-                    )
-                    {
-                        Image(
-                            painter = painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.plant_diary2),
-                            contentDescription = "image description",
-                            contentScale = ContentScale.Crop
-                        )
-                    }
-                }
+//                Box( //이미지 박스
+//                    modifier = Modifier
+//                        .padding(top = 510.dp, start = 15.dp)
+//                        .width(116.36361.dp)
+//                        .height(169.42961.dp)
+//                        .rotate(-4F)
+//                        .background(
+//                            color = Color(0x61BDC8C3),
+//                            shape = RoundedCornerShape(size = 7.23861.dp)
+//                        )
+//                )
+//                {
+//                    Box(
+//                        modifier = Modifier
+//                            .width(108.08009.dp)
+//                            .height(135.87109.dp)
+//                            //.rotate(-1F)
+//                            .padding(
+//                                top = 6.5.dp,
+//                                start = 7.dp
+//                            )
+//                    )
+//                    {
+//                        Image(
+//                            painter = painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.plant_diary2),
+//                            contentDescription = "image description",
+//                            contentScale = ContentScale.Crop
+//                        )
+//                    }
+//                }
 
                 Column(
                     modifier = Modifier
@@ -248,30 +251,53 @@ private fun DiaryScreen() {
 점심 때는 동료들이랑 식사하면서 웃음 가득한 대화 나눴어. 직장 생활이 친구랑 놀러오는 것 같아.
 오후에는 업무 끝내고 집에 오는 길에 행운목 아래서 쉬었어. 자연과 나의 작은 나무 덕분에 마음이 편안해져.
 
-                       집 와서 행운목에 물 주고 잎들
-                       닦아줬어. 이 나무랑 함께하는 건              
-                        정말 행운 같아서 감사해.
+집 와서 행운목에 물 주고 잎들 닦아줬어. 이 나무랑 함께하는 건 정말 행운 같아서 감사해.
 
-                         오늘은 행운목과 함께한 날로 
-                         정말 기분 좋아. 내일도 더 열심
-                          히 일하자!
+오늘은 행운목과 함께한 날로 정말 기분 좋아. 내일도 더 열심히 일하자!
 """,
                         style = Typography.dovemayoR16.copy(
                             lineHeight = 22.sp,
                             letterSpacing = 0.3.sp,
                             fontWeight = FontWeight(400)
                         ) ,
-                        modifier = Modifier.width(220.dp),
-                        obstacleAlignment = TextFlowObstacleAlignment.TopStart,
-                        obstacleContent = {
-                            Icon(
-                                imageVector = Icons.Default.Done,
-                                contentDescription = null,
-                                modifier = Modifier.padding(4.dp)
+                        modifier = Modifier
+                            .padding(15.dp),
+                        obstacleAlignment = TextFlowObstacleAlignment.TopEnd,
+
+                    )
+                    {
+                    Box( //이미지 박스
+                        modifier = Modifier
+                            //.offset(x = 15.dp, y = 210.dp)
+                            //.offset(y = 210.dp)
+                            //.padding(top = 210.dp, start = 15.dp)
+                            .width(116.36361.dp)
+                            .height(169.42961.dp)
+                            .rotate(-4F)
+                            .background(
+                                color = Color(0x61BDC8C3),
+                                shape = RoundedCornerShape(size = 7.23861.dp)
+                            )
+                    )
+                    {
+                        Box(
+                            modifier = Modifier
+                                .width(108.08009.dp)
+                                .height(135.87109.dp)
+                                //.rotate(-1F)
+                                .padding(
+                                    top = 6.5.dp,
+                                    start = 7.dp
+                                )
+                        )
+                        {
+                            Image(
+                                painter = painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.plant_diary2),
+                                contentDescription = "image description",
+                                contentScale = ContentScale.Crop
                             )
                         }
-//
-                    )
+                    }}
                 }
 
             }
