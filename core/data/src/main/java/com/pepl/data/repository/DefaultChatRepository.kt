@@ -3,6 +3,7 @@ package com.pepl.data.repository
 import com.pepl.data.api.AIApi
 import com.pepl.data.api.GreenmateApi
 import com.pepl.data.api.model.ChatResponse
+import com.pepl.data.di.ApiModule
 import com.pepl.data.mapper.toData
 import com.pepl.data.mapper.toRequest
 import com.pepl.model.Chat
@@ -115,6 +116,13 @@ class DefaultChatRepository @Inject constructor(
     }
 
     override suspend fun send(chat: Chat): List<Chat> {
-        return greenmateAIApi.send(chat.toRequest()).toData(chat.name)
+        println("send chat $chat")
+
+        val response = greenmateAIApi.send(chat.toRequest())
+        println("response ${response.errorBody()?.string()}")
+//
+//        println("ret $ret")
+//        return ret
+        return emptyList()
     }
 }

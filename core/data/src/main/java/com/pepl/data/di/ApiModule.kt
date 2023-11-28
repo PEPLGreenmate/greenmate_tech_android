@@ -19,12 +19,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object ApiModule {
 
-    @Qualifier
-    annotation class GreenmateRetrofit
-
-    @Qualifier
-    annotation class AIRetrofit
-
     @Provides
     @Singleton
     fun provideOkhttpClient(): OkHttpClient = OkHttpClient.Builder().build()
@@ -45,13 +39,12 @@ internal object ApiModule {
 
     @Provides
     @Singleton
-    @GreenmateRetrofit
     fun provideGreenmateApi(
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
     ): GreenmateApi {
         return Retrofit.Builder()
-            .baseUrl("http://34.22.102.212:8080")
+            .baseUrl("http://34.64.221.211:8080")
             .addConverterFactory(converterFactory)
             .client(okHttpClient).build()
             .create(GreenmateApi::class.java)
@@ -59,7 +52,6 @@ internal object ApiModule {
 
     @Provides
     @Singleton
-    @AIRetrofit
     fun provideAIApi(
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory,
