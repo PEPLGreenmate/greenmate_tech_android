@@ -11,4 +11,5 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.shimmer)
     implementation(libs.kotlinx.immutable)
+    implementation(libs.textflow)
 }

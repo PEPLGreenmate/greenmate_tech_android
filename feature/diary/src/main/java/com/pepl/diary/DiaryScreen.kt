@@ -15,6 +15,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,7 +46,10 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pepl.designsystem.theme.Typography
+import eu.wewox.textflow.TextFlow
+import eu.wewox.textflow.TextFlowObstacleAlignment
 import kotlinx.coroutines.flow.collectLatest
+
 
 @Composable
 @NonRestartableComposable
@@ -231,7 +237,7 @@ private fun DiaryScreen() {
                     {
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    Text(
+                    TextFlow(
                         text = """오늘 정말 기분 좋았어. 
 아침에 일어나서 행운목 봤더니 정말 예쁘게 햇빛에 비쳤어. 그래서 기분이 좋아서 하루가 기대됐어.
 
@@ -254,13 +260,17 @@ private fun DiaryScreen() {
                             lineHeight = 22.sp,
                             letterSpacing = 0.3.sp,
                             fontWeight = FontWeight(400)
-                        )
-//                            TextStyle(
-//                                fontSize = 14.sp,
-//                                lineHeight = 22.sp,
-//                                letterSpacing = 0.3.sp,
-//                                fontWeight = FontWeight(400)
-//                            )
+                        ) ,
+                        modifier = Modifier.width(220.dp),
+                        obstacleAlignment = TextFlowObstacleAlignment.TopStart,
+                        obstacleContent = {
+                            Icon(
+                                imageVector = Icons.Default.Done,
+                                contentDescription = null,
+                                modifier = Modifier.padding(4.dp)
+                            )
+                        }
+//
                     )
                 }
 
