@@ -1,12 +1,17 @@
 package com.pepl.data.repository
 
+import com.pepl.data.api.AIApi
 import com.pepl.data.api.GreenmateApi
+import com.pepl.data.api.model.ChatResponse
+import com.pepl.data.di.ApiModule
+import com.pepl.data.mapper.toData
+import com.pepl.data.mapper.toRequest
 import com.pepl.model.Chat
 import com.pepl.model.ChatRoom
 import javax.inject.Inject
 
 class DefaultChatRepository @Inject constructor(
-    private val greenmateApi: GreenmateApi,
+    private val greenmateAIApi: AIApi,
 ) : ChatRepository {
     override suspend fun getChatRooms(): List<ChatRoom> {
         return listOf(
@@ -108,5 +113,16 @@ class DefaultChatRepository @Inject constructor(
                 "누구야! 누가 괴롭혔어!"
             )
         )
+    }
+
+    override suspend fun send(chat: Chat): List<Chat> {
+        println("send chat $chat")
+
+        val response = greenmateAIApi.send(chat.toRequest())
+        println("response ${response.errorBody()?.string()}")
+//
+//        println("ret $ret")
+//        return ret
+        return emptyList()
     }
 }
