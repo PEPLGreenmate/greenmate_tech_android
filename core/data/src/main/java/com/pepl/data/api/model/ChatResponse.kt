@@ -1,6 +1,5 @@
 package com.pepl.data.api.model
 
-import com.pepl.model.Chat
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -69,60 +69,10 @@ class DefaultChatRepository @Inject constructor(
     }
 
     override suspend fun getChats(roomId: String): List<Chat> {
-        return listOf(
-            Chat(
-                true,
-                "https://images.unsplash.com/photo-1512428813834-c702c7702b78?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                "페풀이",
-                "08:30",
-                "나 목말라. 물이 필요해!"
-            ),
-            Chat(
-                true,
-                "https://images.unsplash.com/photo-1512428813834-c702c7702b78?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                "페풀이",
-                "08:35",
-                "물 줘서 고마워. 덕분에 행복해졌어!"
-            ),
-            Chat(
-                false,
-                "https://images.unsplash.com/photo-1512428813834-c702c7702b78?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                "페풀이",
-                "08:40",
-                "다음에도 도움 필요하면 언제든 말해"
-            ),
-            Chat(
-                true,
-                "https://images.unsplash.com/photo-1512428813834-c702c7702b78?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                "페풀이",
-                "08:41",
-                "오늘 회사 잘 다녀와!"
-            ),
-            Chat(
-                false,
-                "https://images.unsplash.com/photo-1512428813834-c702c7702b78?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                "페풀이",
-                "20:30",
-                "오늘 회사에서 힘든 일이 있었어"
-            ),
-            Chat(
-                true,
-                "https://images.unsplash.com/photo-1512428813834-c702c7702b78?auto=format&fit=crop&q=80&w=1587&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                "페풀이",
-                "20:31",
-                "누구야! 누가 괴롭혔어!"
-            )
-        )
+        return emptyList()
     }
 
     override suspend fun send(chat: Chat): List<Chat> {
-        println("send chat $chat")
-
-        val response = greenmateAIApi.send(chat.toRequest())
-        println("response ${response.errorBody()?.string()}")
-//
-//        println("ret $ret")
-//        return ret
-        return emptyList()
+        return greenmateAIApi.send(chat.toRequest()).body()?.toData("minho") ?: emptyList()
     }
 }
