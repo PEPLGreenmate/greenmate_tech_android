@@ -12,6 +12,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -21,7 +22,10 @@ internal object ApiModule {
 
     @Provides
     @Singleton
-    fun provideOkhttpClient(): OkHttpClient = OkHttpClient.Builder().build()
+    fun provideOkhttpClient(): OkHttpClient = OkHttpClient.Builder()
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .build()
 
     @Provides
     @Singleton

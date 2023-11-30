@@ -43,20 +43,28 @@ class ChatDetailViewModel @Inject constructor(
 
     fun sendChat(message: String) {
         viewModelScope.launch {
-            val chats = sendChatUseCase(
-                Chat(
-                    false,
-                    "",
-                    "user",
-                    getCurrentLongTime().toChatDateString(),
-                    message
-                )
+            val sendChat = Chat(
+                false,
+                "",
+                "user",
+                getCurrentLongTime().toChatDateString(),
+                message
             )
             val oldChats = if (_chatDetailUiState.value is ChatDetailUiState.Chat) {
-                (_chatDetailUiState.value as ChatDetailUiState.Chat).chats
+                (_chatDetailUiState.value as ChatDetailUiState.Chat).chats + sendChat
             } else {
-                emptyList()
+                listOf(sendChat)
             }
+
+            _chatDetailUiState.value = ChatDetailUiState.Chat(
+                oldChats
+            )
+
+            val chats = sendChatUseCase(
+                sendChat
+            )
+            println("chats $chats")
+
             _chatDetailUiState.value = ChatDetailUiState.Chat(
                 oldChats + chats
             )
