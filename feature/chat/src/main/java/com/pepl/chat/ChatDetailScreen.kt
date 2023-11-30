@@ -91,7 +91,6 @@ internal fun ChatDetailScreen(
     chatRoomId: String,
     onBackClick: () -> Unit,
     onSendClick: (String) -> Unit,
-    viewModel: ChatDetailViewModel = hiltViewModel(),
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -293,7 +292,8 @@ private fun PlantChat(
             } else {
                 RoundedCornerShape(24.dp)
             },
-            color = White
+            color = White,
+            modifier = Modifier.weight(1F)
         ) {
             Text(
                 text = chat.message,
@@ -345,7 +345,8 @@ private fun UserChat(
             } else {
                 RoundedCornerShape(24.dp)
             },
-            color = MainGreen
+            color = MainGreen,
+            modifier = Modifier.weight(1F)
         ) {
             Text(
                 text = chat.message,
