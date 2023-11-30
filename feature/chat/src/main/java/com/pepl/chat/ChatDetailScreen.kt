@@ -293,7 +293,7 @@ private fun PlantChat(
                 RoundedCornerShape(24.dp)
             },
             color = White,
-            modifier = Modifier.weight(1F)
+            modifier = Modifier.weight(1F, fill = false)
         ) {
             Text(
                 text = chat.message,
@@ -345,8 +345,7 @@ private fun UserChat(
             } else {
                 RoundedCornerShape(24.dp)
             },
-            color = MainGreen,
-            modifier = Modifier.weight(1F)
+            color = MainGreen
         ) {
             Text(
                 text = chat.message,
