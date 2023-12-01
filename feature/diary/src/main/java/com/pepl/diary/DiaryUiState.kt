@@ -6,6 +6,6 @@ sealed interface DiaryUiState {
     object Empty : DiaryUiState
 
     data class Diary(
-        val diaries: List<String>,
+        val diaries: List<com.pepl.model.Diary>,
     ) : DiaryUiState
 }
