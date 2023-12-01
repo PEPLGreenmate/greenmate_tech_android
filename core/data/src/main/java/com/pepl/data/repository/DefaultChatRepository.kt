@@ -1,5 +1,6 @@
 package com.pepl.data.repository
 
+import android.util.Log
 import com.pepl.data.api.AIApi
 import com.pepl.data.api.GreenmateApi
 import com.pepl.data.api.model.ChatResponse
@@ -73,6 +74,8 @@ class DefaultChatRepository @Inject constructor(
     }
 
     override suspend fun send(chat: Chat): List<Chat> {
+        val r = greenmateAIApi.send(chat.toRequest()).body()
+        Log.d("ChatSend","$r")
         return greenmateAIApi.send(chat.toRequest()).body()?.toData("minho") ?: emptyList()
     }
 }

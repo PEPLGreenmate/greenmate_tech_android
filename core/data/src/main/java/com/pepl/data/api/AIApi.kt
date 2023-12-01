@@ -15,10 +15,9 @@ interface AIApi {
         @Body request: ChatRequest,
     ): Response<ChatResponse>
 
-    @POST("/diary")
+    @POST("/diary_emotion")
     suspend fun diarySend(
         @Body request: DiaryRequest,
     ): Response<DiaryResponse>
-
 
 }

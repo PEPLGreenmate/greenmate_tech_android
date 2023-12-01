@@ -1,8 +1,10 @@
 package com.pepl.chat
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pepl.diary.DiaryUiState
+import com.pepl.diary.SharedDiaryUiState
 import com.pepl.domain.usecase.GetChatRoomsUseCase
 import com.pepl.domain.usecase.SendDiaryUseCase
 import com.pepl.model.Diary
@@ -44,14 +46,14 @@ class ChatViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = ChatUiState.Loading,
         )
-    private val _diaryUiState = MutableStateFlow<DiaryUiState>(DiaryUiState.Loading)
-    val diaryUiState: StateFlow<DiaryUiState> get() = _diaryUiState
 
     fun sendDiary() {
         viewModelScope.launch {
             try {
                 val result = sendDiaryUseCase()
-                _diaryUiState.value = DiaryUiState.Diary(diaries = result)
+                SharedDiaryUiState.setDiaryUiState(DiaryUiState.Diary(diaries = result))
+
+                Log.d("DiaryUiState", "Value: $result")
             } catch (e: Exception) {
                 _errorFlow.emit(e)
             }

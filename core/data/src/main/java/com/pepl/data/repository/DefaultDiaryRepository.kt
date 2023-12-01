@@ -1,5 +1,6 @@
 package com.pepl.data.repository
 
+import android.util.Log
 import com.pepl.data.api.AIApi
 import com.pepl.data.api.GreenmateApi
 import com.pepl.data.api.model.ChatResponse
@@ -20,6 +21,9 @@ class DefaultDiaryRepository @Inject constructor(
     }
 
     override suspend fun send(): List<Diary> {
-        return greenmateAIApi.diarySend(request()).body()?.toData("minho") ?: emptyList()
+        val m = greenmateAIApi.diarySend(request())
+        Log.d("에러", "${m.body()}")
+
+        return m.body()?.toData() ?: emptyList()
     }
 }

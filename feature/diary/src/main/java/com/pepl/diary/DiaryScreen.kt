@@ -4,6 +4,7 @@ import android.R.attr
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,6 +25,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
@@ -94,6 +98,7 @@ private fun DiaryScreen(
     diaryUiState: DiaryUiState,
     modifier: Modifier = Modifier
 ) {
+    val diaryUiState = diaryUiState
     val scrollState = rememberScrollState()
 
 
@@ -152,21 +157,41 @@ private fun DiaryScreen(
                     .padding(top = 50.dp, bottom = 5.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "기분이 좋은",
-                    style = Typography.pretendardM12.copy(
-                        color = Color(0xFF94959D),
-                    )
-                )
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    modifier = Modifier
-                        .width(110.dp)
-                        .padding(bottom = 10.dp),
-                    text = "23년 9월 30일 토요일 ",
-                    style = Typography.dovemayoR18,
-                    textAlign = TextAlign.Center
-                )
+                when (diaryUiState) {
+                    is DiaryUiState.Loading -> {
+                        // Loading state
+                    }
+
+                    is DiaryUiState.Empty -> {
+                        // Empty state
+                        Text(
+                            text = "",
+                            style = Typography.dovemayoR19,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        )
+                    }
+
+                    is DiaryUiState.Diary -> {
+                        Text(
+                            text = "기분이 좋은",
+                            style = Typography.pretendardM12.copy(
+                                color = Color(0xFF94959D),
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(5.dp))
+                        Text(
+                            modifier = Modifier
+                                .width(115.dp)
+                                .padding(bottom = 10.dp),
+                            text = diaryUiState.diaries.first().date,
+                            style = Typography.dovemayoR18,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
             }
             Box( //바디(박스)
                 modifier = Modifier
@@ -186,38 +211,61 @@ private fun DiaryScreen(
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                bottom = 10.dp,
-                                top = 13.dp
-                            ),
-                        text = "행운목 입양한 날!",
-                        style = Typography.dovemayoR19,
-                        textAlign = TextAlign.Center
-                    )
-                    Box(
-                        //회색선
-                        modifier = Modifier
-                            .padding(start = 45.dp)
-                            .height(0.96515.dp)
-                            .width(215.22787.dp)
-                            .background(
-                                color = Color(0xFFD1D2D9),
-                                shape = RoundedCornerShape(size = 14.dp)
-                            ),
-                        contentAlignment = Alignment.Center,
-                    )
-                    {
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
                     when (diaryUiState) {
                         is DiaryUiState.Loading -> {
                             // Loading state
-                            CircularProgressIndicator(
+                        }
+
+                        is DiaryUiState.Empty -> {
+                            // Empty state
+                            Text(
+                                text = "",
+                                style = Typography.dovemayoR19,
+                                textAlign = TextAlign.Center,
                                 modifier = Modifier
-                                    .fillMaxSize()
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                            )
+                        }
+
+                        is DiaryUiState.Diary -> {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        bottom = 10.dp,
+                                        top = 13.dp
+                                    ),
+                                text = diaryUiState.diaries.first().title,
+                                style = Typography.dovemayoR19,
+                                textAlign = TextAlign.Center
+                            )
+                            Box(
+                                //회색선
+                                modifier = Modifier
+                                    .padding(start = 45.dp)
+                                    .height(0.96515.dp)
+                                    .width(215.22787.dp)
+                                    .background(
+                                        color = Color(0xFFD1D2D9),
+                                        shape = RoundedCornerShape(size = 14.dp)
+                                    ),
+                                contentAlignment = Alignment.Center,
+                            )
+                            {
+                            }
+                            Spacer(modifier = Modifier.height(10.dp))
+                        }
+                    }
+                    when (diaryUiState) {
+                        is DiaryUiState.Loading -> {
+                            // Loading state
+                            Text(
+                                text = "일기가 없습니다",
+                                style = Typography.dovemayoR19,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
                                     .padding(16.dp)
                             )
                         }
