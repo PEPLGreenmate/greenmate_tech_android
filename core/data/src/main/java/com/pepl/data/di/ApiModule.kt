@@ -23,8 +23,8 @@ internal object ApiModule {
     @Provides
     @Singleton
     fun provideOkhttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(90, TimeUnit.SECONDS)
+        .writeTimeout(90, TimeUnit.SECONDS)
         .build()
 
     @Provides

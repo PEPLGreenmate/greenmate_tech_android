@@ -2,34 +2,46 @@ package com.pepl.chat
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.pepl.data.repository.ChatRepository
 import com.pepl.designsystem.theme.BLACK
 import com.pepl.designsystem.theme.Gray
 import com.pepl.designsystem.theme.GreenMateTheme
+import com.pepl.designsystem.theme.MainGreen
 import com.pepl.designsystem.theme.Typography
 import com.pepl.greenmate.feature.chat.R
 import com.pepl.model.ChatRoom
@@ -100,14 +112,16 @@ private fun ChatScreen(
                 }
             }
         }
-
     }
 }
 
 @Composable
 private fun ChatHeader(
     modifier: Modifier,
+    viewModel: ChatViewModel = hiltViewModel(),
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+
     Box(
         modifier = modifier,
     ) {
@@ -120,8 +134,19 @@ private fun ChatHeader(
                     height = 49.dp
                 )
                 .align(Alignment.CenterStart),
+        )
 
-            )
+        Image(
+            painterResource(id = com.pepl.greenmate.core.designsystem.R.drawable.ic_menu),
+            contentDescription = "추가 옵션 버튼",
+            modifier = Modifier
+                .size(19.dp)
+                .clickable {
+                    showDialog = true
+                }
+                .align(Alignment.CenterEnd),
+        )
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -136,6 +161,43 @@ private fun ChatHeader(
                 text = "나의 식물과 오늘 하루를 공유하세요",
                 style = Typography.suitL11,
                 color = Color.Gray
+            )
+        }
+
+        // Dialog to display when the button is clicked
+        if (showDialog) {
+
+            Dialog(
+                onDismissRequest = {
+                    showDialog = false
+                },
+                properties = DialogProperties(
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true
+                ),
+                content = {
+                    Box(
+                        modifier = Modifier
+                            .shadow(
+                                elevation = 100.dp,
+                                spotColor = Color(0x40000000),
+                                ambientColor = Color(0x40000000)
+                            )
+                            .background(color = MainGreen, shape = RoundedCornerShape(size = 20.dp))
+                            .padding(16.dp)
+                            .clickable {
+                                viewModel.sendDiary()
+                            }
+                    ) {
+                        Text(
+                            text = "일기작성하기",
+                            style = Typography.dovemayoR19,
+                            color = Color.White,
+                        )
+
+                        // Add any additional content or actions for your dialog here
+                    }
+                }
             )
         }
     }
@@ -153,8 +215,7 @@ private fun ChatHeaderPreview() {
     }
 }
 
-
-@Preview
+//@Preview
 @Composable
 private fun ChatScreenPreview() {
     GreenMateTheme {

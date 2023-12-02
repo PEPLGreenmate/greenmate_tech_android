@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name="com.pepl.plant.PlantRegister"
+            android:exported="false"
+            android:label="@string/title_activity_plant_register"
+            android:theme="@style/Theme.GreenMate" />
+    </application>
+</manifest>

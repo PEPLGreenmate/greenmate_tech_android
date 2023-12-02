@@ -2,8 +2,10 @@ package com.pepl.data.di
 
 import com.pepl.data.repository.ChatRepository
 import com.pepl.data.repository.DefaultChatRepository
+import com.pepl.data.repository.DefaultDiaryRepository
 import com.pepl.data.repository.DefaultGardenRepository
 import com.pepl.data.repository.DefaultPlantRepository
+import com.pepl.data.repository.DiaryRepository
 import com.pepl.data.repository.GardenRepository
 import com.pepl.data.repository.PlantRepository
 import com.pepl.datastore.datasource.DefaultGardenDataSource
@@ -43,5 +45,11 @@ internal abstract class DataModule {
     abstract fun bindsGardenDataSource(
         dataSource: DefaultGardenDataSource,
     ): GardenDataSource
+
+    @Binds
+    abstract fun bindsDiaryRepository(
+        dataSource: DefaultDiaryRepository,
+    ): DiaryRepository
+
 
 }
