@@ -1,15 +1,12 @@
 package com.pepl.diary
 
-import android.R.attr
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,16 +15,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
@@ -49,7 +42,7 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pepl.designsystem.theme.Typography
-import com.pepl.greenmate.feature.diary.R
+import com.pepl.ui.LoadingScreen
 import eu.wewox.textflow.TextFlow
 import eu.wewox.textflow.TextFlowObstacleAlignment
 import kotlinx.coroutines.flow.collectLatest
@@ -102,7 +95,7 @@ private fun DiaryScreen(
     val scrollState = rememberScrollState()
 
 
-    Box( //전체 화면
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(),
@@ -139,12 +132,12 @@ private fun DiaryScreen(
                     height = 146.dp
                 )
                 .graphicsLayer(
-                    scaleX = -1f // Set scaleX to -1 for horizontal flip
+                    scaleX = -1f
                 )
                 .zIndex(1f)
 
         )
-        Column( // 헤더 / 바디
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
@@ -152,18 +145,17 @@ private fun DiaryScreen(
         )
         {
 
-            Column( //헤더
+            Column(
                 modifier = Modifier
                     .padding(top = 50.dp, bottom = 5.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 when (diaryUiState) {
                     is DiaryUiState.Loading -> {
-                        // Loading state
+                       LoadingScreen()
                     }
 
                     is DiaryUiState.Empty -> {
-                        // Empty state
                         Text(
                             text = "",
                             style = Typography.dovemayoR19,
@@ -193,14 +185,13 @@ private fun DiaryScreen(
                     }
                 }
             }
-            Box( //바디(박스)
+            Box(
                 modifier = Modifier
                     .shadow(
                         elevation = 30.dp,
                         spotColor = Color(0x40000000),
                         ambientColor = Color(0x40000000)
                     )
-                    //.width(330.dp)
                     .fillMaxWidth(0.85f)
                     .fillMaxHeight(0.85f)
                     .background(color = Color(0xFFFFFFFF), shape = RoundedCornerShape(size = 20.dp))
@@ -213,11 +204,10 @@ private fun DiaryScreen(
                 ) {
                     when (diaryUiState) {
                         is DiaryUiState.Loading -> {
-                            // Loading state
+                            LoadingScreen()
                         }
 
                         is DiaryUiState.Empty -> {
-                            // Empty state
                             Text(
                                 text = "",
                                 style = Typography.dovemayoR19,
@@ -259,7 +249,6 @@ private fun DiaryScreen(
                     }
                     when (diaryUiState) {
                         is DiaryUiState.Loading -> {
-                            // Loading state
                             Text(
                                 text = "일기가 없습니다",
                                 style = Typography.dovemayoR19,
@@ -270,7 +259,6 @@ private fun DiaryScreen(
                             )
                         }
                         is DiaryUiState.Empty -> {
-                            // Empty state
                             Text(
                                 text = "일기가 없습니다",
                                 style = Typography.dovemayoR19,
@@ -281,7 +269,6 @@ private fun DiaryScreen(
                             )
                         }
                         is DiaryUiState.Diary -> {
-                            // Diary state
                             TextFlow(
                                 text = diaryUiState.diaries.first().content,
                                 style = Typography.dovemayoR16.copy(

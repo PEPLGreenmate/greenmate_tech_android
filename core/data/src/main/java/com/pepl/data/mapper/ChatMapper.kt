@@ -1,6 +1,5 @@
 package com.pepl.data.mapper
 
-import android.text.format.DateUtils
 import com.pepl.data.api.model.ChatRequest
 import com.pepl.data.api.model.ChatResponse
 import com.pepl.model.Chat

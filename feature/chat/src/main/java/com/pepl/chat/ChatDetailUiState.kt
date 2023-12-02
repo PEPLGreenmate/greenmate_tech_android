@@ -1,7 +1,5 @@
 package com.pepl.chat
 
-import com.pepl.model.Chat
-
 sealed interface ChatDetailUiState {
 
     object Loading : ChatDetailUiState
