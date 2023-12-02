@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.kotlinx.immutable)
     implementation(libs.compose.shimmer)
+    implementation(project(mapOf("path" to ":feature:diary")))
     //implementation(libs.hilt.android)
     //kapt(libs.hilt.compiler)
     //implementation(project(mapOf("path" to ":feature:diary")))
