@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,26 +22,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.pepl.data.repository.ChatRepository
 import com.pepl.designsystem.theme.BLACK
-import com.pepl.designsystem.theme.Gray
 import com.pepl.designsystem.theme.GreenMateTheme
 import com.pepl.designsystem.theme.MainGreen
 import com.pepl.designsystem.theme.Typography
-import com.pepl.greenmate.feature.chat.R
 import com.pepl.model.ChatRoom
 import com.pepl.ui.LoadingScreen
 import kotlinx.collections.immutable.toPersistentList
@@ -164,7 +155,6 @@ private fun ChatHeader(
             )
         }
 
-        // Dialog to display when the button is clicked
         if (showDialog) {
 
             Dialog(
@@ -194,8 +184,6 @@ private fun ChatHeader(
                             style = Typography.dovemayoR19,
                             color = Color.White,
                         )
-
-                        // Add any additional content or actions for your dialog here
                     }
                 }
             )
@@ -215,7 +203,6 @@ private fun ChatHeaderPreview() {
     }
 }
 
-//@Preview
 @Composable
 private fun ChatScreenPreview() {
     GreenMateTheme {

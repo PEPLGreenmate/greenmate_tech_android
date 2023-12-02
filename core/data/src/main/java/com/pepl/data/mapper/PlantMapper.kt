@@ -5,7 +5,6 @@ import com.pepl.model.Plant
 import com.pepl.model.PlantStatus
 import com.pepl.util.getCurrentLongTime
 import com.pepl.util.toLongTime
-import kotlinx.serialization.SerialName
 
 internal fun PlantResponse.toData(): Plant = Plant(
     plantId = "",

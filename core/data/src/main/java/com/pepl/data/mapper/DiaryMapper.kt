@@ -1,15 +1,9 @@
 package com.pepl.data.mapper
 
-import android.text.format.DateUtils
-import com.pepl.data.api.model.ChatRequest
-import com.pepl.data.api.model.ChatResponse
 import com.pepl.data.api.model.DiaryRequest
 import com.pepl.data.api.model.DiaryResponse
-import com.pepl.model.Chat
 import com.pepl.model.Diary
 import com.pepl.util.getCurrentLongDate
-import com.pepl.util.getCurrentLongTime
-import com.pepl.util.toChatDateString
 import com.pepl.util.toDate
 
 internal fun DiaryResponse.toData(): List<Diary> {
