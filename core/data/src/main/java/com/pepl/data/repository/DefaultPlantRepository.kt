@@ -9,7 +9,15 @@ class DefaultPlantRepository @Inject constructor(
     private val greenmateApi: GreenmateApi,
 ) : PlantRepository {
     override suspend fun getPlants(): List<Plant> {
-        return listOf(greenmateApi.requestPlants().toData())
+        val res = greenmateApi.requestPlants(
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJncmVlbm1hdGUiLCJleHAiOjE3MDI4Njg3MDksInN1YiI6IjEifQ.DdlD4RENmwglBUp3LtAJXbFbyVwGtMZD5Cjn67eTqT8"
+        )
+        val body = res.body()
+        return if (body != null) {
+            listOf(body.toData())
+        } else {
+            emptyList()
+        }
     }
 
     override suspend fun getPlantDetails(plantId: String) {

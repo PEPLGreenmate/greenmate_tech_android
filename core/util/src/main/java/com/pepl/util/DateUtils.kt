@@ -5,7 +5,7 @@ import java.util.Date
 import java.util.Locale
 
 private const val growStartDateFormat = "yyyy-MM-dd"
-private const val dateTimeFormat = "yyyy-MM-dd hh:mm:ss"
+private const val dateTimeFormat = "yyyy-MM-dd hh-mm-ss"
 private const val chatDateFormat = "HH:mm"
 private const val dateFormat = "yy년 MM월 dd일 EEEE"
 private val simpleDateFormat = SimpleDateFormat(dateTimeFormat, Locale.KOREA)
