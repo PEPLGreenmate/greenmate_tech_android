@@ -65,6 +65,7 @@ internal fun PlantRoute(
     val plantUiState by viewModel.plantUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
+        viewModel.getPlants()
         viewModel.errorFlow.collectLatest { throwable -> onShowErrorSnackBar(throwable) }
     }
 
