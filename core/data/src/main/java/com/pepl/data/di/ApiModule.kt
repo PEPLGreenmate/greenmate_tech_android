@@ -47,7 +47,7 @@ internal object ApiModule {
         converterFactory: Converter.Factory,
     ): GreenmateApi {
         return Retrofit.Builder()
-            .baseUrl("http://34.64.221.211:8080")
+            .baseUrl("http://34.22.102.212")
             .addConverterFactory(converterFactory)
             .client(okHttpClient).build()
             .create(GreenmateApi::class.java)

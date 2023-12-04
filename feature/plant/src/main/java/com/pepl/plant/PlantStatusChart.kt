@@ -32,7 +32,6 @@ import com.pepl.model.Plant
 fun PlantStatusChart(
     plant: Plant,
 ) {
-    println("plant $plant")
     Row(
         modifier = Modifier
             .fillMaxWidth(),

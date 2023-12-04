@@ -1,5 +1,6 @@
 package com.pepl.plant
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pepl.domain.usecase.GetLastGardenUseCase
@@ -9,12 +10,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,7 +35,7 @@ class PlantViewModel @Inject constructor(
         MutableStateFlow<PlantUiState>(PlantUiState.Loading)
     val plantUiState: StateFlow<PlantUiState> = _plantUiState.asStateFlow()
 
-    init {
+    fun getPlants(){
         viewModelScope.launch {
             getLastGardenUseCase().flatMapLatest { lastGardenId ->
                 flow { emit(getPlantsUseCase(lastGardenId)) }

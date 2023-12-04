@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PlantResponse(
-    @SerialName("lastUpdatedTime") val lastUpdatedTime: String,
-    @SerialName("temperature") val temperature: Int,
-    @SerialName("humidity") val humidity: Int,
-    @SerialName("luminous") val luminous: Int,
-    @SerialName("groundHumidity") val groundHumidity: Int,
-    @SerialName("temperatureState") val temperatureState: String,
-    @SerialName("humidityState") val humidityState: String,
-    @SerialName("luminousState") val luminousState: String,
-    @SerialName("groundHumidityState") val groundHumidityState:String
+    @SerialName("nickname") val nickname: String,
+    @SerialName("scientificName") val scientificName: String,
+    @SerialName("growthStartDate") val growthStartDate: String,
+    @SerialName("measurementDateTime") val measurementDateTime: String,
+    @SerialName("recentTemperature") val recentTemperature: Int,
+    @SerialName("recentIlluminance") val recentIlluminance: Int,
+    @SerialName("recentSoilMoisture") val recentSoilMoisture: Int,
+    @SerialName("recentHumidity") val recentHumidity: Int,
+    @SerialName("imageUrl") val imageUrl: String,
 )
