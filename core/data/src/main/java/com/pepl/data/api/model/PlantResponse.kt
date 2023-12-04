@@ -12,5 +12,6 @@ data class PlantResponse(
     @SerialName("recentTemperature") val recentTemperature: Int,
     @SerialName("recentIlluminance") val recentIlluminance: Int,
     @SerialName("recentSoilMoisture") val recentSoilMoisture: Int,
+    @SerialName("recentHumidity") val recentHumidity: Int,
     @SerialName("imageUrl") val imageUrl: String,
 )

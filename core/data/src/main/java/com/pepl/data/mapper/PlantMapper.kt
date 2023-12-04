@@ -17,14 +17,14 @@ internal fun PlantResponse.toData(): Plant = Plant(
     startPlantedDate = growthStartDate.toStartDateLongTime(),
     type = scientificName,
     status = PlantStatus(
-        soil = recentSoilMoisture, recentSoilMoisture.toSoilMoistureState(),
-        humidity = recentSoilMoisture, recentSoilMoisture.toSoilMoistureState(),
+        soil = recentSoilMoisture, recentSoilMoisture.toMoistureState(),
+        humidity = recentHumidity, recentHumidity.toMoistureState(),
         light = recentIlluminance, recentIlluminance.toIlluminousState(),
         temp = recentTemperature, recentTemperature.toTempState()
     )
 )
 
-internal fun Int.toSoilMoistureState() = when {
+internal fun Int.toMoistureState() = when {
     this < 40 -> "건조해요"
     this < 70 -> "적정"
     else -> "습해요"
